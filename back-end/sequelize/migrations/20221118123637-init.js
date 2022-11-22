@@ -31,6 +31,28 @@ module.exports = {
       },
     });
 
+    await queryInterface.createTable('token', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      token: {
+        type: Sequelize.STRING(500)
+      },
+      userId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'user',
+          key:'id',
+          as: 'userId'
+        }
+      },
+    });
+
     await queryInterface.createTable('videos', {
       id: {
         allowNull: false,

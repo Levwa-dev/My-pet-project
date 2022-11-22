@@ -10,12 +10,13 @@
     "migrate": "cd sequelize && npx sequelize-cli db:migrate",
     "createSeed": "cd sequelize && npx sequelize-cli seed:generate --name",
     "create:test": "cd sequelize && cross-env NODE_ENV=test npx sequelize-cli db:create && cross-env NODE_ENV=test npx sequelize-cli db:migrate  && cross-env NODE_ENV=test npx sequelize-cli db:seed --seed 20221118144335-orderInfo.js && cross-env NODE_ENV=test npx sequelize-cli db:seed:all",
-    "drop:test" : "cd sequelize && cross-env NODE_ENV=test npx sequelize-cli db:drop"
+    "drop:test": "cd sequelize && cross-env NODE_ENV=test npx sequelize-cli db:drop"
   },
   "author": "Dmitriev Valeriy",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
