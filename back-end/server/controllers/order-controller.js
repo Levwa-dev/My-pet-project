@@ -8,7 +8,7 @@ class OrderController {
         try {
             const {orderedProducts, chossedBox, orderInfo} = req.body
             if(!orderedProducts.length){
-                res.status(500).json({error:'При замовленні виникла помилка'})
+               throw new Error()
             }
             order = await OrderInfo.create({...orderInfo})
             for(let orderedProduct of orderedProducts) {

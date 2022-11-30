@@ -13,7 +13,7 @@ module.exports = {
         building:'dwa',
         sector:2,
         payment:'Готівка',
-        orderNumber: new Date(),
+        orderNumber: '12133451',
         totalPrice: 123,
         comment:'asdwadsdwadsdwa',
         date: new Date()

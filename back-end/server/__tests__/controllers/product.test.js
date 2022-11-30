@@ -11,7 +11,7 @@ const mockResponse = () => {
     return res
 }
 
-describe('Product controller testing', ()=>{
+describe('The product controller testing', ()=>{
 
     beforeAll(async () => {
         mockedSequelize = new Sequelize(db.test);
