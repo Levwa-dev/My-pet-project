@@ -5,17 +5,25 @@ require('dotenv').config()
 class TokenService {
 
     generateJWT (data) {
-        const access = jwt.sign(data, process.env.JWT_ACCESS_KEY, {expiresIn:'20m'})
+        const access = jwt.sign(data, process.env.JWT_ACCESS_KEY, {expiresIn:'30m'})
         const refresh = jwt.sign(data, process.env.JWT_REFRESH_KEY, {expiresIn:'30d'})
         return {access, refresh}
     }
 
     refreshTokenVerify(token) {
-        return jwt.verify(token, process.env.JWT_REFRESH_KEY)
+        try {
+            return jwt.verify(token, process.env.JWT_REFRESH_KEY)
+        } catch (e) {
+            return null
+        }
     }
     
     accessTokenVerify(token) {
-        return jwt.verify(token, process.env.JWT_ACCESS_KEY)
+        try {
+            return jwt.verify(token, process.env.JWT_ACCESS_KEY)
+        } catch (error) {
+            return null 
+        }
     }
 
     async saveToken (userId, token) {

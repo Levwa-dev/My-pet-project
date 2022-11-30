@@ -68,7 +68,7 @@ module.exports = {
       }
     });
 
-    await queryInterface.createTable('main_photos', {
+    await queryInterface.createTable('main_photo', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -163,7 +163,7 @@ module.exports = {
       }
     });
 
-    await queryInterface.createTable('product_pictures', {
+    await queryInterface.createTable('product_picture', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -217,7 +217,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       orderNumber: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       totalPrice: {
         type: Sequelize.INTEGER
@@ -231,7 +231,7 @@ module.exports = {
       }
     });
 
-    await queryInterface.createTable('order_products', {
+    await queryInterface.createTable('order_product', {
       id: {
         allowNull: false,
         autoIncrement: true,

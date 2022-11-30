@@ -7,7 +7,7 @@ module.exports = {
       {
         name: 'QWEr',
         description: 'DataTypes.TEXT',
-        picture: 'second.jpg',
+        picture: 'first.jpeg',
         price: 12,
         date: new Date(),
         sale: false,
@@ -16,7 +16,7 @@ module.exports = {
       {
         name: 'QWEr',
         description: 'DataTypes.TEXT',
-        picture: 'third.jpg',
+        picture: 'second.jpg',
         price: 12,
         date: new Date(),
         sale: false,

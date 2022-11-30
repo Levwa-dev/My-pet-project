@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-     await queryInterface.bulkInsert('main_photos', [
+     await queryInterface.bulkInsert('main_photo', [
       {
         photo: 'first.jpg'
       }
@@ -10,6 +10,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-     await queryInterface.bulkDelete('main_photos', null, {});
+     await queryInterface.bulkDelete('main_photo', null, {});
   }
 };

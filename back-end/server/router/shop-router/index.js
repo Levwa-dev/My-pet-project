@@ -1,7 +1,9 @@
 const express = require('express')
 const router = new express.Router()
 
-router.use('/', (req, res)=>{
+const authMiddleware = require('../../middlewares/auth/check-auth')
+
+router.get('/', authMiddleware, (req, res)=>{
     res.send('work')
 })
 

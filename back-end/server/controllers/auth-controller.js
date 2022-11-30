@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 
 const TokenService = require('../services/token-service')
 
-class AdminController {
+class AuthController {
 
     async registration (req, res) {
         try {
@@ -19,7 +19,6 @@ class AdminController {
             res.cookie('refreshToken', refresh, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly:true})
             res.json({id, name, isAdmin, token:access})
         } catch (e) {
-            console.log(e)
             res.status(500).json({error:'При реїстрація сталася помилка'})
         }
     }
@@ -40,7 +39,6 @@ class AdminController {
             res.cookie('refreshToken', refresh, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly:true})
             res.json({id, name, isAdmin, token:access})
         } catch (e) {
-            console.log(e)
             res.status(500).json({error:'При авторизації сталася помилка'})
         }
        
@@ -66,7 +64,7 @@ class AdminController {
             if(!refreshToken || !tokenFromDb || !userData){
                 return res.status(401).json({error:'Час вашої сесії вичерпано, авторизуйтесь знову'})
             }
-            const {id, name, isAdmin} = userData
+            const {id, name, isAdmin} = await User.findOne({where:{id:userData.id}})
             const tokens = TokenService.generateJWT({id, name, isAdmin})
             return res.json({id, name, isAdmin, token:tokens.access})
         } catch (e) {
@@ -75,4 +73,4 @@ class AdminController {
     }
 }
 
-module.exports = new AdminController()
+module.exports = new AuthController()
