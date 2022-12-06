@@ -5,13 +5,13 @@ module.exports = (req, res, next) => {
         next()
     }
     try {
-        const token = req.headers.authorization.split(' ')[1] 
+        const token = req.headers.authorization.split(' ')[1]
         if(!token) { // Відсутній токен авторизації
             return res.status(401).send({error:"Не авторізований"})
         }
         const decoded = TokenService.accessTokenVerify(token)
-        if(!decoded) { // Якщо час дії токена закінчився
-            return res.redirect('/auth/refresh')
+        if(!decoded){
+            return res.status(401).send({error:"Не авторізований"})
         }
         req.user = decoded
         next()

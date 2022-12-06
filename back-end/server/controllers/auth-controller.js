@@ -26,6 +26,9 @@ class AuthController {
     async login(req, res) {
         try {
             const {email, password} = req.body
+            if(!email || !password) { 
+                return res.json({error:'Відстуній пароль, або email'})
+            }
             const user = await User.findOne({where:{email}})
             if(!user){
                 return res.json({error:'Такого користувача не існує'})

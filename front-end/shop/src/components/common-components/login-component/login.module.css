@@ -1,0 +1,56 @@
+.modal {
+    margin: 100px auto;
+    width: 400px;
+    height: 400px;
+    border: 2px solid #000;
+    border-radius: 20px;
+}
+.modal > form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+    padding-top: 100px;
+}
+.inputs {
+    margin-bottom: 30px;
+    height: 30px;
+    width: 100%;
+    border: 1px solid #000;
+}
+.loginButton {
+    margin-bottom: 30px;
+    height: 40px;
+    width: 300px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    border: none;
+    color: white;
+    letter-spacing: 1.5px;
+    background-color: #FA95EA;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.loginButton:hover {
+    cursor: pointer;
+}
+.error {
+    text-align: center;
+    display: block;
+    line-height: 20px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+}
+
+@media screen and (max-width: 700px) {
+    .modal {
+        width: 300px;
+    }
+    .modal > form {
+        width: 200px;
+    }
+    .loginButton {
+        height: 30px;
+        width: 200px;
+    }
+}

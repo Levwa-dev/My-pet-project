@@ -10,7 +10,7 @@ const router = require('./router/index.js')
 const port = process.env.PORT || 5001
 
 
-app.use(cors({origin: process.env.CLIENT_HOST}))
+app.use(cors({origin: process.env.CLIENT_HOST, credentials:true}))
 app.use(cookie())
 app.use(express.static(path.resolve(__dirname, 'public')))
 

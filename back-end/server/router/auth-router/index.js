@@ -2,7 +2,7 @@ const express = require('express')
 const router = new express.Router()
 
 const AuthController = require('../../controllers/auth-controller')
-
+const checkAuth = require('../../middlewares/auth/check-auth')
 router.use(express.json())
 
 router.post('/registration', AuthController.registration)
