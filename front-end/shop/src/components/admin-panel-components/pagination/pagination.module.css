@@ -1,0 +1,20 @@
+.paginationBody {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.page {
+    margin: 0 5px;
+    font-size: 16px;
+    font-weight: 700;
+}
+.nav {
+    background-color: #FF64E6;
+    border: none;
+    border-radius: 20px;
+    height: 20px;
+    width: 70px;
+}
+.nav:hover {
+    cursor: pointer;
+}

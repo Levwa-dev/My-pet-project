@@ -1,4 +1,4 @@
-const {Product, ProductPicture} = require('../../sequelize/models')
+const {Product, ProductPicture, Category} = require('../../sequelize/models')
 
 const FilesService = require('../services/files-service')
 const PaginationServies = require('../services/pagination-service')
@@ -39,19 +39,26 @@ class ProductController {
 
     async showProductListForAdminPanel(req, res) {
         try {
-            const {orderedBy = 'ASC'} = req.query
-            const productCount = await Product.findAndCountAll()
-            const {limit, offset, pages} = await PaginationServies.getPaginatedData(productCount, 20, req.params.page)
+            const {orderColumn = 'date', orderedBy = 'ASC'} = req.query
+            let query = {...req.query}
+            if(query){
+                if(query.orderColumn) delete query.orderColumn
+                if(query.orderedBy) delete query.orderedBy
+            }
+            const productCount = await Product.findAndCountAll({where:query})
+            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, req.params.page)
             const products = await Product.findAll({
-                order: [['price', orderedBy]],
+                where: query,
+                order: [[orderColumn, orderedBy]],
                 limit,
-                offset})
-            if(!products){
-                return res.status(404).json({error:'Невірно вказана сторінка'})
+                offset
+            })
+            if(!products.length){
+                return res.status(404).json({error:'Такі товари відстуні'})
             }
             for(let product of products){
                 const category = await product.getCategory()
-                product.setDataValue('category', category)
+                product.setDataValue('category', category.name)
             }
             res.json({result:products, pages})
         } catch (e) {
@@ -60,11 +67,23 @@ class ProductController {
         
     }
 
+    async getCategories (req, res) {
+        try {
+            const categories = await Category.findAll()
+            if(!categories.length){
+                res.status(404).json({error:'Жодної агенції'})
+            }
+            res.json({result:categories})
+        } catch (e) {
+            res.status(500).json({error:'Помилка завантаження даних'})
+        }
+    }
+
     async showProductList(req, res) {
         try {
             const {orderedBy = 'ASC', category} = req.query
             const productCount = await Product.findAndCountAll({where:{categoryId:category}})
-            const {limit, offset, pages} = await PaginationServies.getPaginatedData(productCount, 20, req.params.page)
+            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, req.params.page)
             const products = await Product.findAll({
                 order: [['price', orderedBy]],
                 where:{categoryId:category},

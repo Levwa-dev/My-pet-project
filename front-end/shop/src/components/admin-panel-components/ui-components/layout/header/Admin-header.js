@@ -2,7 +2,7 @@ import React from "react"
 import style from "./admin-header.module.css"
 import {useNavigate} from "react-router-dom"
 import {useDispatch} from "react-redux"
-import { logoutAction } from "../../../../store/common/common-actions/auth-action"
+import { logoutAction } from "../../../../../store/common/common-actions/auth-action"
 
 export default function AdminHeader () {
     const dispatch = useDispatch()

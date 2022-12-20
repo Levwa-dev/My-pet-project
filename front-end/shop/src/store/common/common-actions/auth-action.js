@@ -11,7 +11,7 @@ export const loginAction = createAsyncThunk( // відправляє парол�
            const response = await authService.login(data.body)
            if(!response.error){
                 localStorage.setItem('token', response.token)
-                data.navigate(ADMIN_CATEGORY)
+                data.navigate(ADMIN_CATEGORY+'/1')
                 return response
            }
            return thunkAPI.rejectWithValue(response.error)
@@ -39,9 +39,9 @@ export const logoutAction = createAsyncThunk( // виконує вихід з с
 )
 export const refreshAction = createAsyncThunk( // отримання нового аксес токену
     'user/refreshAction',
-    async(token, thunkAPI) => {
+    async(_, thunkAPI) => {
         try {
-            const response = await authService.refresh(token)
+            const response = await authService.refresh()
             if(!response.error){
                 localStorage.setItem('token', response.token)
                 return response

@@ -22,10 +22,10 @@ class CategoryController {
 
     async showCategoryList(req, res) {
         try {
-            const query = { where:{...req.query} }
-            const categoryCount = await Category.findAndCountAll(query)
-            const {limit, offset, pages} = await PaginationServies.getPaginatedData(categoryCount, 20, req.params.page)
-            const categories = await Category.findAll(query,{ limit, offset})
+            const query = { ...req.query }
+            const categoryCount = await Category.findAndCountAll({where:query})
+            const {limit, offset, pages} = PaginationServies.getPaginatedData(categoryCount, 20, req.params.page)
+            const categories = await Category.findAll({where:query, limit, offset})
             if(categories.length){
                 return res.json({result:categories, pages})
             }

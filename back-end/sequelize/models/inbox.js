@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class InBox extends Model {
    
     static associate(models) {
-      this.belongsTo(models.OrderInfo)
+      this.belongsTo(models.OrderInfo, {foreignKey:'orderInfoId', onDelete:"CASCADE"})
     }
   }
   InBox.init({

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { loginAction, logoutAction } from '../common-actions/auth-action'
+import { loginAction, logoutAction, refreshAction } from '../common-actions/auth-action'
 const initialState = {
     id:'',
     name: '',
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
             state.isAdmin = action.payload.isAdmin
         }
     },
-    extraReducers: (builder) =>{
+    extraReducers: (builder) => {
         builder.addCase(loginAction.fulfilled, (state, action)=>{
             state.id = action.payload.id
             state.name = action.payload.name
@@ -51,6 +51,22 @@ export const userSlice = createSlice({
         builder.addCase(logoutAction.rejected, (state, action)=>{
             state.isLoading = false
             state.error = action
+        })
+
+        builder.addCase(refreshAction.fulfilled, (state, action)=>{
+            state.id = action.payload.id
+            state.name = action.payload.name
+            state.isAdmin = action.payload.isAdmin
+            state.error = ''
+            state.isLoading = false
+        })
+        builder.addCase(refreshAction.pending, (state, action)=>{
+            state.error = ''
+            state.isLoading = true
+        })
+        builder.addCase(refreshAction.rejected, (state, action)=>{
+            state.error = action.payload
+            state.isLoading = false
         })
     }
 })

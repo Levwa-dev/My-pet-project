@@ -11,7 +11,8 @@ router.post('/upload-photos/:id', productDetailUpload.array('picture'), productC
 
 router.use(express.json())
 
-router.get('/list/:page', productController.showProductList)
+router.get('/list/:page', productController.showProductListForAdminPanel)
+router.get('/categories', productController.getCategories)
 router.get('/:id', productController.showProduct)
 router.delete('/:id', productController.deleteProduct)
 

@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.Category)
-      this.hasMany(models.ProductPicture, {foreignKey:'productId', onDelete:'CASCADE'})
+      this.belongsTo(models.Category, {foreignKey:'categoryId', onDelete:'CASCADE'})
+      this.hasMany(models.ProductPicture, {foreignKey:'productId'})
     }
   }
   Product.init({

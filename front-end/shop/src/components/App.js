@@ -15,10 +15,10 @@ function App() {
       if(token) {
           const user = jwt(token)
           const currentTime = new Date()
-          Number(user.exp) <= Number(currentTime) ?
-            dispatch(setUser(user))
+          new Date(user.exp * 1000) <= currentTime ?
+            dispatch(refreshAction())
               :
-            dispatch(refreshAction(token))
+            dispatch(dispatch(setUser(user)))
       }
   }, [])
 

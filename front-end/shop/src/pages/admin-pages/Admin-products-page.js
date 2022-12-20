@@ -1,8 +1,12 @@
 import React from "react";
+import AdminLayout from "../../components/admin-panel-components/ui-components/layout/AdminLayout";
+import ProductList from "../../components/admin-panel-components/products-components/product-list/Product-list";
 
-export default function AdminProductPage () {
+export default function AdminProductsPage () {
 
     return (
-        <h1>PRODUCTS</h1>
+        <AdminLayout>
+            <ProductList/>
+        </AdminLayout>
     )
 }

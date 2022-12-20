@@ -1,0 +1,15 @@
+.add {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 150px;
+    height: 30px;
+    font-weight: 700;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    color: #000;
+    background-color: #FF64E6;
+    border-radius: 20px;
+}

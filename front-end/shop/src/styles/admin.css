@@ -1,0 +1,21 @@
+.admin__detail-content {
+    min-height: 30px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    margin-bottom: 15px;
+    text-align: center;
+}
+.admin__detail-name {
+    font-size: 20px;
+    font-weight: 700;
+    width: 100%;
+    background-color: beige;
+    letter-spacing: 1.5px;
+    padding: 5px 0;
+}
+.admin__detail-value {
+    font-size: 18px;
+    letter-spacing: 1px;
+    width: 100%;
+    padding: 5px 0;
+}

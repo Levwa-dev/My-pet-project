@@ -1,0 +1,14 @@
+.edit {
+    width: 120px;
+    height: 30px;
+    background-color: #ff6fa2;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.edit:hover {
+    cursor: pointer;
+    background-color: hsl(339, 96%, 58%);
+}

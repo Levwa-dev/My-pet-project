@@ -1,0 +1,36 @@
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+#titleId {
+    width: 50px;
+ }
+.title > div, .data > div {
+    border: 1px solid #000;
+    background-color: rgb(237, 237, 237);
+    width: 120px;
+    text-align: center;
+}
+.item {
+    max-width: 784px;
+    display: block;
+    margin: 10px auto;
+}
+.item > a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #000;
+}
+.data {
+    display: flex;
+}
+.data > div {
+    border: 1px dashed #000;
+}
+#date {
+    padding-top: 3px;
+    font-size: 14px;
+}

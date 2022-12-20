@@ -1,0 +1,14 @@
+.mainBody {
+    padding-top: 30px;
+    margin: 20px;
+}
+.buttons {
+    margin: 0 auto;
+    width: 260px;
+}
+.container {
+    display: flex;
+    justify-content: space-between;  
+    margin-bottom: 30px;  
+}
+
