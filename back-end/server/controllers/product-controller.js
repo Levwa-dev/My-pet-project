@@ -39,7 +39,7 @@ class ProductController {
 
     async showProductListForAdminPanel(req, res) {
         try {
-            const {orderColumn = 'date', orderedBy = 'ASC'} = req.query
+            const {orderColumn = 'date', orderedBy = 'DESC'} = req.query
             let query = {...req.query}
             if(query){
                 if(query.orderColumn) delete query.orderColumn
@@ -71,7 +71,7 @@ class ProductController {
         try {
             const categories = await Category.findAll()
             if(!categories.length){
-                res.status(404).json({error:'Жодної агенції'})
+                return res.status(404).json({error:'Жодної категорії'})
             }
             res.json({result:categories})
         } catch (e) {
@@ -102,16 +102,18 @@ class ProductController {
 
     async updateProduct (req, res) {
         try {
-            const {id} = req.params
-            const {file} = req
-            if(req.body.picturesForDeleting){
-                for(let picture of req.body.picturesForDeleting){
+            const { id } = req.params
+            const { file } = req
+            let { picturesForDeleting } = req.body
+            if(picturesForDeleting){ // якщо є список фото для видалення
+                picturesForDeleting = JSON.parse(picturesForDeleting)
+                for(let picture of picturesForDeleting) {
                     await ProductPicture.destroy({where:{picture}})
                     FilesService.deleteAsyncFile(picture, imageDir, detailImageDir)
                 }
                 delete req.body.picturesForDeleting
             }
-            if(file){
+            if(file){ // якщо змінюємо головне фото 
                 const product = await Product.findOne({where:{id}})
                 req.body.picture = file.filename
                 FilesService.deleteAsyncFile(product.picture, imageDir)
@@ -152,10 +154,9 @@ class ProductController {
                 FilesService.deleteAsyncFile(photo.picture, imageDir, detailImageDir)
             }
             FilesService.deleteAsyncFile(product.picture, imageDir)
-            
             res.json({result:true})
         } catch (e) {
-            res.json({error:'Помилка видалення даних'})
+            res.status(500).json({error:'Помилка видалення даних'})
         }
     }
 

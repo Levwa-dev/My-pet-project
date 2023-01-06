@@ -1,0 +1,92 @@
+.addPhotos {
+    display: block;
+    margin: 0 auto;
+    height: 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background-color: rgb(255, 116, 209);
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
+    margin-bottom: 30px;
+}
+.addPhotos:hover {
+    background-color: rgb(255, 54, 165);
+    cursor: pointer;
+}
+.photosContainer {
+    width: 400px;
+    margin: 0 auto;
+}
+.photosForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.submit {
+    font-weight: 700;
+    margin: 0 auto;
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    border-radius: 30px;
+    border: none;
+    background-color: #FF64E6;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.submit:hover {
+    background-color: #e215c0;
+    cursor: pointer;
+}
+
+.photosLabel {
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 30px;
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    border-radius: 30px;
+    border: none;
+    background-color: hsl(310, 100%, 90%);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+ }
+ 
+ #photos {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+ }
+
+.selectedPhotos {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    margin-right: 5px;
+}
+.selectedPhotosList {
+    display: flex;
+}
+.removePhoto {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+}
+.detailPhoto {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}

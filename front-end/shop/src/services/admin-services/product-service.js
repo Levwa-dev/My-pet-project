@@ -12,5 +12,21 @@ export const productService = {
     async fetchProduct (id) {
         const response = await adminAxios.get(`/product/${id}`)
         return response.data
+    },
+    async editProduct (id, data) {
+        const response = await adminAxios.put(`/product/${id}`, data, {headers: { "Content-type": "multipart/form-date" }})
+        return response.data
+    },
+    async postProduct (data) {       
+        const response = await adminAxios.post(`/product/add`, data, {headers: { "Content-type": "multipart/form-date" }})
+        return response
+    },
+    async deleteProduct (id) {
+        const response = await adminAxios.delete(`/product/${id}`)
+        return response.data
+    },
+    async uploadPhotos (id, data) {
+        const response = await adminAxios.post(`/product/upload-photos/${id}`, data, {headers: { "Content-type": "multipart/form-date" }})
+        return response.data
     }
 }

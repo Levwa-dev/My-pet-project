@@ -1,5 +1,13 @@
 export const LOGIN_PAGE = '/login'
+// шляхи для взаємодії з категоріями
 export const ADMIN_CATEGORY = '/admin/categories'
 export const ADMIN_CATEGORY_PAGE = '/admin/category'
+export const ADMIN_ADD_CATEGORY = '/admin/category/add'
+// шляхи для взаємодії з продуктами
 export const ADMIN_PRODUCTS = '/admin/products'
 export const ADMIN_PRODUCT = '/admin/product'
+export const ADMIN_ADD_PRODUCT = '/admin/product/add'
+// шляхи для взаємодії з замовленнями
+export const ADMIN_ORDERS = '/admin/orders'
+export const ADMIN_ORDER = '/admin/order'
+export const ADMIN_ORDER_ADD = '/admin/order/add'

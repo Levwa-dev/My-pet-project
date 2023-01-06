@@ -28,8 +28,10 @@
     border: none;
     border-radius: 30px;
     font-size: 16px;
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 25%);
     background-color: #FF64E6;
 }
 .logOut:hover {
     cursor: pointer;
+    background-color: #df24c0;
 }

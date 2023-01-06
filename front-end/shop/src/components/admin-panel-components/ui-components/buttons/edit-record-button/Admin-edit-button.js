@@ -1,8 +1,8 @@
 import React from "react";
 import style from '../edit-record-button/Admin-edit-button.module.css'
 
-export default function AdminEditButton () {
+export default function AdminEditButton ({edit, setEdit}) {
     return (
-        <button className={style.edit}>Редагувати</button>
+        <button onClick={()=>{setEdit(!edit)}} className={style.edit}>{edit ? 'Скасувати' : 'Редагувати'}</button>
     )
 }

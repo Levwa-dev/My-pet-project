@@ -37,7 +37,6 @@ const productSlice = createSlice({
         // Знаходимо всі категорії
         builder.addCase(adminFetchProductsCategories.fulfilled, (state, action) => {
             state.categories = action.payload.result
-            state.error = ''
         })
         builder.addCase(adminFetchProductsCategories.rejected, (state, action) => {
             state.error = action.payload

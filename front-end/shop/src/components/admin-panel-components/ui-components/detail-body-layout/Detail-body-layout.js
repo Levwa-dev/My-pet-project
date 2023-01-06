@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 
 import { useParams } from "react-router-dom"
 import { useDispatch } from "react-redux";
@@ -10,9 +10,10 @@ import AdminDeleteButton from "../buttons/delete-record-button/Admin-delete-butt
 import LoadingComponent from "../../../common-components/loading/Loading";
 import ErrorOccurred from "../../../common-components/error-component/Error-occurred";
 
-export default function DetailBody ({ children , error, loading, fetch, reset }) {
+export default function DetailBody ({ children , error, loading, fetch, reset, deleteFunction, editForm }) {
     const dispatch = useDispatch()
     const {id} = useParams()
+    const [edit, setEdit] = useState(false)
 
     useEffect(()=>{
         dispatch(fetch({id}))
@@ -21,7 +22,6 @@ export default function DetailBody ({ children , error, loading, fetch, reset })
         }
     },[])
     
-
     return (
         <main className={style.mainBody}>
             { error ?
@@ -33,15 +33,16 @@ export default function DetailBody ({ children , error, loading, fetch, reset })
                         <>
                             <section className={style.buttons}>
                                 <div className={style.container}>
-                                    <AdminEditButton/>
-                                    <AdminDeleteButton/>
+                                    <AdminEditButton edit={edit} setEdit={setEdit}/>
+                                    <AdminDeleteButton deleteFunction={deleteFunction}/>
                                 </div>
                             </section>
-                            <section>
-                                {children}
-                            </section>
+                            { edit ?
+                                editForm
+                                :
+                                <section>{children}</section>
+                            }
                         </>
-
             }
         </main>
     )

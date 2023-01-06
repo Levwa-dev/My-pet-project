@@ -19,3 +19,26 @@
     width: 100%;
     padding: 5px 0;
 }
+.admin__detail-image {
+    width: 150px;
+    height: 125px;
+}
+.admin__label {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.admin__input, .admin__select, .admin__textarea {
+    height: 30px;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+.admin__textarea {
+    min-height: 200px;
+    max-height: 400px;
+    min-width: 300px;
+    max-width: 388px;
+    padding: 5px;
+}

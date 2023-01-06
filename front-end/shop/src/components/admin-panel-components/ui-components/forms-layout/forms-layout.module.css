@@ -1,0 +1,32 @@
+.container {
+    margin: 0 auto;
+    max-width: 400px;
+    min-width: 300px;
+}
+.mainBody {
+    width: 100%;
+    padding-top: 20px;
+}
+.formBody {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.submit {
+    font-weight: 700;
+    margin: 0 auto;
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    border-radius: 30px;
+    border: none;
+    background-color: #FF64E6;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+.submit:hover {
+    background-color: #e215c0;
+    cursor: pointer;
+}

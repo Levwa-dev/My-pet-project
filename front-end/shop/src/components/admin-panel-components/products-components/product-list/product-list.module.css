@@ -5,6 +5,10 @@
     justify-content: center;
     width: 100%;
 }
+.titleItems {
+    display: grid;
+    place-content: center;
+}
 #titleId {
     width: 50px;
  }
@@ -31,6 +35,5 @@
     border: 1px dashed #000;
 }
 #date {
-    padding-top: 3px;
     font-size: 14px;
 }

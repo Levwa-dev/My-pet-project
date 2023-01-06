@@ -1,0 +1,15 @@
+.container {
+    margin: 0 auto;
+    max-width: 400px;
+    min-width: 300px;
+}
+.mainBody {
+    width: 100%;
+    padding-top: 20px;
+}
+.formBody {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 50px;
+}

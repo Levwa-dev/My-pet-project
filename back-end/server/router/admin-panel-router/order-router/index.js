@@ -9,6 +9,7 @@ router.post('/add', orderController.addOrder)
 router.put('/update/:id', orderController.updateOrder)
 router.delete('/delete/:id', orderController.deleteOrder)
 router.get('/list/:page', orderController.showOrderList)
+router.get('/find-product', orderController.findProduct)
 router.get('/:id', orderController.showOrder)
 
 module.exports = router

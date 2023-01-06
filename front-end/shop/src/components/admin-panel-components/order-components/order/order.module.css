@@ -1,0 +1,31 @@
+#orderedProduct, #choosedBoxContent {
+    margin-top: 50px;
+    border-bottom: none;
+}
+#orderedProductItem {
+    background-color: #c2e1fc;
+}
+
+.orderedProductValue {
+    border: 1px solid #000;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    padding: 5px 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.orderedProductValue > p {
+    font-size: 18px;
+    padding-top: 5px;
+}
+.orderedProductTitle {
+    font-weight: 700;
+    font-size: 18px;
+    max-width: 200px;
+    margin: 0 auto;
+    background-color: beige;
+}
+#choosedBox {
+    background-color: #abfeec;
+}

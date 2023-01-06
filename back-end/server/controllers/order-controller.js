@@ -1,4 +1,4 @@
-const {InBox, OrderInfo, OrderProduct} = require('../../sequelize/models')
+const {InBox, OrderInfo, OrderProduct, Product} = require('../../sequelize/models')
 const PaginationServies = require('../services/pagination-service')
 
 class OrderController {
@@ -6,7 +6,7 @@ class OrderController {
     async addOrder(req, res) {
         let order
         try {
-            const {orderedProducts, chossedBox, orderInfo} = req.body
+            const {orderedProducts, choosedBox, orderInfo} = req.body
             if(!orderedProducts.length){
                throw new Error()
             }
@@ -14,8 +14,8 @@ class OrderController {
             for(let orderedProduct of orderedProducts) {
                 await OrderProduct.create({...orderedProduct, orderInfoId: order.id})
             }
-            if(chossedBox.length){
-                for(let box of chossedBox) {
+            if(choosedBox.length){
+                for(let box of choosedBox) {
                     await InBox.create({...box, orderInfoId: order.id})
                 }
             }
@@ -32,7 +32,7 @@ class OrderController {
             const {id} = req.params
             const order = await OrderInfo.findOne({where:{id}})
             order.setDataValue('orderedProducts', await order.getOrderProducts())
-            order.setDataValue('chossedBox', await order.getInBoxes())   
+            order.setDataValue('choosedBox', await order.getInBoxes())   
             res.json({result: order})
         } catch (e) {
             res.status(500).json({error:"Помилка зчитування даних"})
@@ -42,10 +42,15 @@ class OrderController {
     async showOrderList (req, res) {
         try {
             const {orderedBy = 'DESC'} = req.query
+            const params = req.query
+            if(params){
+                delete params.orderedBy
+            }
             const {page} = req.params
-            const orderCount = await OrderInfo.findAndCountAll()
-            const {limit, offset, pages} = await PaginationServies.getPaginatedData(orderCount, 20, page)
+            const orderCount = await OrderInfo.findAndCountAll({where:params})
+            const {limit, offset, pages} = PaginationServies.getPaginatedData(orderCount, 20, page)
             const orderList = await OrderInfo.findAll({
+                where:params,
                 order: [['date', orderedBy]],
                 limit,
                 offset,
@@ -61,6 +66,9 @@ class OrderController {
                     'date'
                 ]
             })
+            if(!orderList.length){
+                return res.status(404).json({error:'Замовлення відстуні'})
+            }
             res.json({result:orderList, pages})
         } catch (e) {
             res.status(500).json({error:"Помилка зчитування даних"})
@@ -110,6 +118,19 @@ class OrderController {
             res.status(500).json({error:"Помилка видалення даних"})
         }
         
+    }
+    
+    async findProduct (req, res) {
+        try {
+            const {name} = req.query
+            const product = await Product.findOne({where:{name}})
+            if(product){
+                return res.json({result:product})
+            }
+            res.status(404).json({error:"Такого товару не існує"})
+        } catch (e) {
+            res.status(500).json({error:"Помилка з'єднання з сервером"})
+        }
     }
 
 

@@ -1,7 +1,7 @@
 import React, {useState, useMemo, useEffect} from "react";
 import BodyLayout from "../../ui-components/body-layout/BodyLayout";
 
-import { ADMIN_PRODUCTS, ADMIN_PRODUCT } from "../../../../utils/consts";
+import { ADMIN_PRODUCTS, ADMIN_PRODUCT, ADMIN_ADD_PRODUCT } from "../../../../utils/consts";
 import { validatorService } from "../../../../services/validator-services";
 import { useDispatch, useSelector } from "react-redux"
 import { adminFetchProducts, adminFetchProductsCategories } from "../../../../store/admin/admin-actions/product-actions"
@@ -32,6 +32,7 @@ export default function ProductList () {
 
     return (
         <BodyLayout url={ADMIN_PRODUCTS}
+                    addURL={ADMIN_ADD_PRODUCT}
                     searchFields={searchFields}
                     selectSearchFields={selectSearchFields}
                     fetchAction={adminFetchProducts}
@@ -56,13 +57,13 @@ export default function ProductList () {
                                     <li className={style.item} key={item.id}>
                                         <Link to={ADMIN_PRODUCT + '/' + item.id}>
                                             <div className={style.data}>
-                                                <div id={style.titleId}>{item.id}</div>
-                                                <div>{item.name}</div>
-                                                <div>{item.price}</div>
-                                                <div>{item.price?'так':'ні'}</div>
-                                                <div>{item.avaliable?'так':'ні'}</div>
-                                                <div>{item.category}</div>
-                                                <div id={style.date}>{validatorService.setLocaleTime(item.date)}</div>
+                                                <div className={style.titleItems} id={style.titleId}>{item.id}</div>
+                                                <div className={style.titleItems}>{item.name}</div>
+                                                <div className={style.titleItems}>{item.price}</div>
+                                                <div className={style.titleItems}>{item.sale?'так':'ні'}</div>
+                                                <div className={style.titleItems}>{item.avaliable?'так':'ні'}</div>
+                                                <div className={style.titleItems}>{item.category}</div>
+                                                <div className={style.titleItems} id={style.date}>{validatorService.setLocaleTime(item.date)}</div>
                                             </div>
                                         </Link>
                                     </li>

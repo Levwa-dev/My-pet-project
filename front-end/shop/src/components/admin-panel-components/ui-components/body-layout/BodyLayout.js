@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom"
 
 
 export default function BodyLayout (props) {
-    const {url, searchFields, fetchAction, state, buttonTitle, children, selectSearchFields } = props
+    const {url, searchFields, fetchAction, state, buttonTitle, children, selectSearchFields, addURL } = props
     const [page, setPage] = useState(1)
     const [searchParams, setSearchParams] = useState({})
     const dispatch = useDispatch()
@@ -40,19 +40,20 @@ export default function BodyLayout (props) {
                                чи завантажились дані, якщо так, тоді показуємо їх.
                             */
                         }
-                        {   state.error ?
-                                <ErrorOccurred error={state.error}/>
-                                    :
-                                state.isLoading ?
-                                    <LoadingComponent/>
-                                        :
-                                    <>
-                                        <AdminAddButton title = { buttonTitle } />
-                                        <div className={style.content}>
-                                            { children }
-                                        </div>
-                                        <AdminPagination page={page} pages={state.pages} setPage={setPage}/>
-                                    </>
+                        {   state.isLoading ?
+                                <LoadingComponent/>
+                                :
+                                <>
+                                    <AdminAddButton url={addURL} title = { buttonTitle } />
+                                    <div className={style.content}>
+                                        {  state.error ?
+                                                <ErrorOccurred error={state.error}/>
+                                                :
+                                                children 
+                                        } 
+                                    </div>
+                                    { !state.error && <AdminPagination page={page} pages={state.pages} setPage={setPage}/>}
+                                </>
                         }
                     </div>
             </section>

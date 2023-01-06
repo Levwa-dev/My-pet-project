@@ -136,6 +136,9 @@ module.exports = {
       picture: {
         type: Sequelize.TEXT
       },
+      oldPrice : {
+        type: Sequelize.INTEGER
+      },
       price: {
         type: Sequelize.INTEGER
       },
