@@ -12,7 +12,6 @@
     text-align: center;
 }
 .dataItem {
-    margin: 10px auto;
     display: grid;
     font-weight: 400;
     place-content: center;

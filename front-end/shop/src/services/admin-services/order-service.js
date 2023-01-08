@@ -10,7 +10,15 @@ export const orderServices = {
         return response.data
     },
     async deleteOrder(id) {
-        const response = await adminAxios.delete(`/order/${id}`)
+        const response = await adminAxios.delete(`/order/delete/${id}`)
+        return response.data
+    },
+    async findProduct (params) {
+        const response = await adminAxios.get('/order/find-product/',  {params} )
+        return response.data
+    },
+    async postOrder (data) {
+        const response = await adminAxios.post('/order/add', data)
         return response.data
     }
 

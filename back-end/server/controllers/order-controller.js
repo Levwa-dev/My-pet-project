@@ -10,6 +10,10 @@ class OrderController {
             if(!orderedProducts.length){
                throw new Error()
             }
+            let totalPrice = 0
+            orderedProducts.map(item=>totalPrice += item.price)
+            orderInfo.orderNumber = JSON.stringify(Date.parse(new Date()))
+            orderInfo.totalPrice = totalPrice
             order = await OrderInfo.create({...orderInfo})
             for(let orderedProduct of orderedProducts) {
                 await OrderProduct.create({...orderedProduct, orderInfoId: order.id})
@@ -132,7 +136,6 @@ class OrderController {
             res.status(500).json({error:"Помилка з'єднання з сервером"})
         }
     }
-
 
 }
 

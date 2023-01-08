@@ -1,9 +1,15 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import FormsLayout from "../../ui-components/forms-layout/Forms-layout"
+import { orderServices } from "../../../../services/admin-services/order-service"
+
+import styles from './order-form.module.css'
 
 export default function OrderForm ({ sendData, currentData = ''}) {
-    const [data, setData] = useState({})
+    const [data, setData] = useState({payment:'Готівка'})
+    const [productName, setProductName] = useState({})
+    const [boxName, setBoxName] = useState({})
     const [products, setProducts] = useState([])
+    const [boxes, setBoxes] = useState([])
 
     const saveData = (key) => (e) => {
         const copy = {...data}
@@ -14,9 +20,93 @@ export default function OrderForm ({ sendData, currentData = ''}) {
 
     const addProduct = (e) => {
         e.preventDefault()
-        const copy = [...products, {id:''}]
+        const copy = [...products, {}]
         setProducts(copy)
     }
+
+    const addBoxes = (e) => {
+        e.preventDefault()
+        if(!products.length) return
+        const copy = [...boxes, {}]
+        setBoxes(copy)
+    }
+
+    const removeItem = (array, set, index) => (e) => {
+        e.preventDefault()
+        if(array === products) {
+            const product = array[index]
+            for(let i = 0; i < boxes.length; i++) {
+                if(boxes[i].productId === product.productId){
+                    const newBoxes = boxes.filter(item=>boxes.indexOf(item) !== i)
+                    setBoxes(newBoxes)
+                }
+            }
+        }
+            const copy = array.filter(item=>array.indexOf(item) !== index)
+            set(copy)
+    }
+
+    const setProductQuantity = index => e => {
+        const copy = [...products]
+        copy[index].quantity = e.target.value
+        setProducts(copy)
+    }
+
+    const chooseProduct = (index) => async(e) => {
+        try {
+            e.preventDefault()
+            const searchParams = new URLSearchParams(productName)
+            const response = await orderServices.findProduct(searchParams)
+            if(response.error) {
+                throw new Error(response.error)
+            }
+            const product = {
+                productId: response.result.id,
+                name: response.result.name,
+                quantity: 1,
+                price: response.result.price,
+            }
+            const copy = [...products]
+            copy[index] = product
+            setProducts(copy)
+        } catch (e) {
+            alert(e.message)
+        }
+    }
+
+    const chooseProductInBox = (index) => (e) => {
+        const value = e.target.value
+        const copy = [...boxes]
+        copy[index] = JSON.parse(value)
+        setBoxes(copy)
+    }
+
+    const chooseBox = (index) => async (e) => {
+        try {
+            e.preventDefault()
+            const searchParams = new URLSearchParams(boxName)
+            const response = await orderServices.findProduct(searchParams)
+            if(response.error){
+                throw new Error(response.error)
+            }
+            const copy = [...boxes]
+            copy[index].boxName = response.result.name
+            copy[index].boxId = response.result.id
+            copy[index].price = response.result.price
+            setBoxName({})
+            setBoxes(copy)
+        } catch (e) {
+            alert(e.message)
+        }
+    }
+
+    useEffect(()=>{
+        const copy = {...data}
+        copy.orderedProducts = products.filter(item=>item.hasOwnProperty('productId'))
+        if(!copy.orderedProducts.length) delete copy.orderedProducts
+        copy.choosedBox = boxes.filter(item=>item.hasOwnProperty('boxName'))
+        setData(copy)
+    },[products, boxes])
 
     return (
         <FormsLayout sendData={sendData} data={data}>
@@ -42,7 +132,7 @@ export default function OrderForm ({ sendData, currentData = ''}) {
             <input defaultValue={currentData.sector} id="admin__sector" onChange={saveData('sector')} className="admin__input"/>
 
             <label id="admin__payment" className="admin__label">Сплата</label>
-            <input defaultValue={currentData.payment} id="admin__payment" onChange={saveData('payment')} className="admin__input"/>
+            <input defaultValue={currentData.payment || data.payment} id="admin__payment" onChange={saveData('payment')} className="admin__input"/>
 
             <label id="admin__comment" className="admin__label">Коментар</label>
             <input defaultValue={currentData.comment} id="admin__comment" onChange={saveData('comment')} className="admin__input"/>
@@ -50,19 +140,45 @@ export default function OrderForm ({ sendData, currentData = ''}) {
             { products &&
                 products.map((item, index)=>{
                     return (
-                        <div key={index}>
-                            <button>X</button>
-                            <input className="admin__input" placeholder="Введіть назву товару"/>
-                            <button>Обрати</button>
-                            <p>Обрано:</p>
+                        <div className={styles.productItem} key={index}>
+                            <button onClick={removeItem(products, setProducts,index)} className={styles.productButton}>X</button>
+                            <div className={styles.productContent}>   
+                                <input onChange={(e)=>setProductName({name:e.target.value})} id={styles.productInput} className="admin__input" placeholder="Введіть назву товару"/>
+                                <button onClick={chooseProduct(index)} className={styles.productChoosed}>Обрати</button>
+                            </div>
+                            <p className={styles.productSelected}>Обрано: {item.name || ''}</p>
                             <p></p>
                             <label id="admin__input-quatity" className="admin__label">Кількість</label>
-                            <input id="admin__input-quatity" className="admin__input"/>
+                            <input onChange={setProductQuantity(index)} value={item.quantity || 0} style={{width:'50px'}} id="admin__input-quatity" className="admin__input"/>
                         </div>
                     )
                 })
             }
-            <button onClick={addProduct}>Додати товар</button>
+            <button className={styles.sendButton} onClick={addProduct}>Додати товар</button>
+
+            {boxes &&
+                boxes.map((item, index)=>{
+                    return (
+                        <div className={styles.productItem} key={index}>
+                             <button onClick={removeItem(boxes, setBoxes, index)} className={styles.productButton}>X</button>
+                             <select onChange={chooseProductInBox(index)} className={styles.boxSelect}>
+                                <option value=''>----</option>
+                                {products &&
+                                    products.map((item)=>{    
+                                        return <option key={item.productId} value={JSON.stringify({productId:item.productId, productName:item.name})}>{item.name}</option>
+                                    })
+                                }
+                            </select>
+                            <div className={styles.productContent}>
+                                <input className={styles.boxInput} onChange={e=>setBoxName({name:e.target.value})} placeholder="Введіть назву коробки" />
+                                <button onClick={chooseBox(index)} className={styles.productChoosed}>Обрати</button>
+                            </div>
+                            <p className={styles.boxName}>Коробка - {item.boxName || ''}</p>
+                        </div>
+                    )
+                })
+            }
+             <button className={styles.sendButton} onClick={addBoxes}>Обрати упаковку</button>
         </FormsLayout>
     )
 }
