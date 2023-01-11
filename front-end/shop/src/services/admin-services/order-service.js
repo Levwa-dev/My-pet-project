@@ -20,6 +20,10 @@ export const orderServices = {
     async postOrder (data) {
         const response = await adminAxios.post('/order/add', data)
         return response.data
+    },
+    async updateOrder (id, data) {
+        const response = await adminAxios.put(`/order/update/${id}`, data)
+        return response.data
     }
 
 }

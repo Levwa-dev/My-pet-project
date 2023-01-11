@@ -82,32 +82,32 @@ class OrderController {
     async updateOrder (req, res) {
         try {
             const {id} = req.params
-            const {products, boxes, info} = req.body
-            if(info) await OrderInfo.update({...info}, {where:{id}})
-            if(products.length){
-                for(let product of products) {
-                    if(product.delete){
+            console.log(req.body)
+            const {orderedProducts, choosedBox, orderInfo} = req.body
+            if(orderInfo) await OrderInfo.update({...orderInfo}, {where:{id}})
+            if(orderedProducts){
+                for(let product of orderedProducts) {
+                    if(product?.delete){
                         await OrderProduct.destroy({where:{id:product.id}})
                     }
                     else{
-                        delete product.delete
                         await OrderProduct.create({...product, orderInfoId:id})
                     }
                 }
             }
-            if(boxes.length){
-                for(let box of boxes) {
-                    if(box.delete) {
+            if(choosedBox){
+                for(let box of choosedBox) {
+                    if(box?.delete) {
                         await  InBox.destroy({where:{id:box.id}})
                     }
                     else{
-                        delete box.delete
                         await InBox.create({...box, orderInfoId:id})
                     }      
                 }
             }
             res.json({result:true})
         } catch (e) {
+            console.log(e)
             res.status(500).json({error:'Сталася помилка при редагуванні'})
         }
         

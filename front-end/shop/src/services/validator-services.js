@@ -31,7 +31,7 @@ export const validatorService = {
         }
         let objectWithDifferentValues = {}
         for(let key in data) { // Шукаємо не співпадаючі значення, та додаємо їх до об'єкту
-            if(template[key] !== data[key]){
+            if(JSON.stringify(template[key]) !== JSON.stringify(data[key])){
                 objectWithDifferentValues[key] = data[key]
             }
         }

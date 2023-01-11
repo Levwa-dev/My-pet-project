@@ -4,11 +4,13 @@ import { orderServices } from "../../../../services/admin-services/order-service
 
 import styles from './order-form.module.css'
 
-export default function OrderForm ({ sendData, currentData = ''}) {
-    const [data, setData] = useState({payment:'Готівка'})
+export default function OrderForm ({children, sendData, defaultData, currentData = '', productWithoutBox = [] }) {
+    const [data, setData] = useState(defaultData || {...currentData})
+    const [a, setA] = useState(productWithoutBox)
     const [productName, setProductName] = useState({})
     const [boxName, setBoxName] = useState({})
     const [products, setProducts] = useState([])
+    const [productsForChoose, setProductsForChoose] = useState([])
     const [boxes, setBoxes] = useState([])
 
     const saveData = (key) => (e) => {
@@ -26,7 +28,7 @@ export default function OrderForm ({ sendData, currentData = ''}) {
 
     const addBoxes = (e) => {
         e.preventDefault()
-        if(!products.length) return
+        if(!productsForChoose.length || boxes.length >= productsForChoose.length) return
         const copy = [...boxes, {}]
         setBoxes(copy)
     }
@@ -44,12 +46,6 @@ export default function OrderForm ({ sendData, currentData = ''}) {
         }
             const copy = array.filter(item=>array.indexOf(item) !== index)
             set(copy)
-    }
-
-    const setProductQuantity = index => e => {
-        const copy = [...products]
-        copy[index].quantity = e.target.value
-        setProducts(copy)
     }
 
     const chooseProduct = (index) => async(e) => {
@@ -93,7 +89,6 @@ export default function OrderForm ({ sendData, currentData = ''}) {
             copy[index].boxName = response.result.name
             copy[index].boxId = response.result.id
             copy[index].price = response.result.price
-            setBoxName({})
             setBoxes(copy)
         } catch (e) {
             alert(e.message)
@@ -101,10 +96,13 @@ export default function OrderForm ({ sendData, currentData = ''}) {
     }
 
     useEffect(()=>{
+        setProductsForChoose([...products, ...a])
+    },[products, a])
+
+    useEffect(()=>{
         const copy = {...data}
         copy.orderedProducts = products.filter(item=>item.hasOwnProperty('productId'))
-        if(!copy.orderedProducts.length) delete copy.orderedProducts
-        copy.choosedBox = boxes.filter(item=>item.hasOwnProperty('boxName'))
+        copy.choosedBox = boxes.filter(item=>item.hasOwnProperty('boxName') && item.hasOwnProperty('productId'))
         setData(copy)
     },[products, boxes])
 
@@ -147,9 +145,6 @@ export default function OrderForm ({ sendData, currentData = ''}) {
                                 <button onClick={chooseProduct(index)} className={styles.productChoosed}>Обрати</button>
                             </div>
                             <p className={styles.productSelected}>Обрано: {item.name || ''}</p>
-                            <p></p>
-                            <label id="admin__input-quatity" className="admin__label">Кількість</label>
-                            <input onChange={setProductQuantity(index)} value={item.quantity || 0} style={{width:'50px'}} id="admin__input-quatity" className="admin__input"/>
                         </div>
                     )
                 })
@@ -163,8 +158,8 @@ export default function OrderForm ({ sendData, currentData = ''}) {
                              <button onClick={removeItem(boxes, setBoxes, index)} className={styles.productButton}>X</button>
                              <select onChange={chooseProductInBox(index)} className={styles.boxSelect}>
                                 <option value=''>----</option>
-                                {products &&
-                                    products.map((item)=>{    
+                                {productsForChoose &&
+                                    productsForChoose.map((item)=>{    
                                         return <option key={item.productId} value={JSON.stringify({productId:item.productId, productName:item.name})}>{item.name}</option>
                                     })
                                 }
@@ -179,6 +174,7 @@ export default function OrderForm ({ sendData, currentData = ''}) {
                 })
             }
              <button className={styles.sendButton} onClick={addBoxes}>Обрати упаковку</button>
+             {children}
         </FormsLayout>
     )
 }

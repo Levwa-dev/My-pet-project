@@ -1,5 +1,6 @@
-import React from "react"
+import React, {useState, useEffect} from "react";
 import DetailBody from "../../ui-components/detail-body-layout/Detail-body-layout"
+import OrderEdit from "../order-edit/Order-edit"
 import styles from "./order.module.css"
 
 import { useSelector } from "react-redux"
@@ -9,8 +10,26 @@ import { orderServices } from "../../../../services/admin-services/order-service
 import { validatorService } from "../../../../services/validator-services"
 
 export default function Order () {
-
+    const [productWithoutBox, setProductWithoutBox] = useState([])
     const {order, error, isLoading} = useSelector(state=>state.adminOrder)
+
+    useEffect(()=>{
+        let productList = []
+        if(order){
+            if(!order.choosedBox.length) productList = [...order.orderedProducts]
+            else {
+                productList = order.orderedProducts.filter(({productId})=>{
+                    let noneBox = true
+                    for(let box of order.choosedBox){
+                        if(productId === box.productId) noneBox = false
+                    }
+                    if(noneBox) return true 
+                    return false 
+                })
+            }
+            setProductWithoutBox(productList) 
+        }
+    },[order])
 
     return (
         <DetailBody error={error} 
@@ -18,7 +37,7 @@ export default function Order () {
                     fetch={fetchOrder} 
                     reset={resetOrder} 
                     deleteFunction={orderServices.deleteOrder}
-                    editForm={'<ProductEdit product={product} categories={categories}/>'}>
+                    editForm={<OrderEdit order={order} productWithoutBox={productWithoutBox}/>}>
             <div className='admin__detail-content'>
                 <div className='admin__detail-name'>ID</div>
                 <div className='admin__detail-value'>{order.id}</div>
@@ -97,10 +116,6 @@ export default function Order () {
                                     <div className={styles.orderedProductTitle}>Назва</div>
                                     <p>{item.name}</p>
                                 </div>
-                                <div className={styles.orderedProductValue}>
-                                    <div className={styles.orderedProductTitle}>Кількість</div>
-                                    <p>{item.quantity}</p>
-                                </div>
                             </div>
                         )
                     })
@@ -112,20 +127,12 @@ export default function Order () {
                             <div id={styles.choosedBoxContent} key={item.id} className='admin__detail-content'>
                                 <div id={styles.choosedBox} className='admin__detail-name'>Пакунок № {index+1}</div>
                                 <div className={styles.orderedProductValue}>
-                                    <div className={styles.orderedProductTitle}>ID коробки</div>
-                                    <p>{item.boxId}</p>
+                                    <div className={styles.orderedProductTitle}>ID - Назва коробки</div>
+                                    <p>{item.boxId} - {item.boxName}</p>
                                 </div>
                                 <div className={styles.orderedProductValue}>
-                                    <div className={styles.orderedProductTitle}>Назва коробки</div>
-                                    <p>{item.boxName}</p>
-                                </div>
-                                <div className={styles.orderedProductValue}>
-                                    <div className={styles.orderedProductTitle}>ID товару</div>
-                                    <p>{item.productId}</p>
-                                </div>
-                                <div className={styles.orderedProductValue}>
-                                    <div className={styles.orderedProductTitle}>Назва товару</div>
-                                    <p>{item.productName}</p>
+                                    <div className={styles.orderedProductTitle}>ID - Назва товару</div>
+                                    <p>{item.productId} - {item.productName}</p>
                                 </div>
                             </div>
                         )

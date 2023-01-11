@@ -1,0 +1,51 @@
+.description {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.contentTitle {
+    text-align: center;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: rgb(114, 16, 16);
+}
+.orderedProduct, .orderedProductBox {
+    width: 400px;
+    height: 141px;
+    border: 1px solid #000;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    margin-bottom: 30px;
+    background-color: hsl(180, 77%, 86%);
+}
+.orderedProductBox {
+    background-color: rgb(219, 255, 243);
+}
+.delete {
+    width: 25px;
+    height: 25px;
+    display: grid;
+}
+.content{
+    width:100%;
+    text-align: center;
+}
+.content > p {
+    font-size: 18px
+}
+.title {
+    margin: 0px auto;
+    width: 125px;
+    border-bottom: 1px solid #000;
+}
+.item {
+    margin: 5px 0;
+    font-size: 24px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+.choosed {
+    background-color: red;
+}

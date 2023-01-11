@@ -5,7 +5,8 @@ import { validatorService } from "../../../../services/validator-services";
 import { orderServices } from "../../../../services/admin-services/order-service";
 
 export default function OrderAdd() {
-
+    const defaultData = {payment:'Готівка'}
+    
     const template = {
         firstName:'',
         lastName:'',
@@ -44,6 +45,6 @@ export default function OrderAdd() {
     }
     
     return (
-        <OrderForm sendData={sendData} />
+        <OrderForm sendData={sendData} defaultData={defaultData} />
     )
 }
