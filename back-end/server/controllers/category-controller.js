@@ -77,7 +77,5 @@ class CategoryController {
             res.status(500).json({error:'Помилка видалення даних'})
         }
     }
-
-
 }
 module.exports = new CategoryController()

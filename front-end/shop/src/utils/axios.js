@@ -1,9 +1,16 @@
 import axios from "axios"
 import { authService } from "../services/auth-services"
 
+export const commonAxios = axios.create(
+    {
+        baseURL: process.env.REACT_APP_BACK_END_HOST + '/shop',
+    }
+)
+
 export const adminAxios = axios.create(
     {
         baseURL: process.env.REACT_APP_BACK_END_HOST + '/admin',
+        withCredentials: true
     }
 )
 
@@ -11,7 +18,6 @@ adminAxios.interceptors.request.use( config => {   // При кожному ви
    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     return config
 })
-
 
 adminAxios.interceptors.response.use( (config) => {
     return config

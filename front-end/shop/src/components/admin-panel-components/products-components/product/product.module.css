@@ -90,3 +90,10 @@
     margin-top: 10px;
     margin-bottom: 5px;
 }
+#productDescription {
+    max-width: 600px;
+}
+#productDescriptionContent {
+     display: grid;
+    place-items: center;
+}

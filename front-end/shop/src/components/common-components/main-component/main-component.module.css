@@ -1,0 +1,119 @@
+.mainInfo {
+    padding: 60px 0;
+    background-color: #FCDFE9;
+}
+.loadingOrErrorBody {
+    height: 100vh;
+}
+.mainContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+}
+.mainTitle {
+    font-size: 40px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 40px;
+    letter-spacing: 2px;
+    text-align: left;
+    margin-bottom: 20px;
+    max-width: 890px;
+}
+.mainText {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 40px;
+    letter-spacing: 2px;
+    text-align: left;
+    max-width: 890px;
+}
+.mainPhoto {
+    width: 750px;
+    height: 630px;
+    object-fit: contain
+}
+.mainHighlight {
+    color: #FF006B;
+}
+.mainLink {
+    height: 50px;
+    line-height: 48px;
+    width: 190px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #FA95EA;
+    display: block;
+    margin: 0 auto;
+    margin-top: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (max-width: 1600px) {
+    .mainPhoto {
+       max-width: 536px;
+       height: 482px;
+    }
+    .mainTitle {
+        max-width: 695px;
+    }
+    .mainText {
+        max-width: 655px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .mainPhoto {
+        width: 335px;
+        height: 325px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .mainPhoto {
+        width: 335px;
+        height: 325px;
+    }
+    .mainTitle {
+        font-size: 34px;
+    }
+    .mainText {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 835px) {
+    .mainPhoto {
+        width: 295px;
+        height: 430px;
+    }
+   
+}
+
+@media screen and (max-width: 700px) {
+    .mainContainer {
+        flex-direction: column-reverse;
+    }
+    .mainInfo {
+        padding: 0 0 30px 0;
+    }
+    .mainPhoto {
+        width: 355px;
+        height: 440px;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .mainPhoto {
+        width: 310px;
+        height: 400px;
+    }
+    .mainTitle {
+        font-size: 30px;
+    }
+}

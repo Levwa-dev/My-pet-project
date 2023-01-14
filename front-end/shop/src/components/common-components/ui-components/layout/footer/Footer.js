@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import style from "./footer.module.css"
 
-import logo from "../../../../images/ice-logo.png"
-import facebook from "../../../../images/facebook.png"
-import instagram from "../../../../images/instagram.png"
-import twitter from "../../../../images/twitter.png"
+import logo from "../../../../../images/ice-logo.png"
+import facebook from "../../../../../images/facebook.png"
+import instagram from "../../../../../images/instagram.png"
+import twitter from "../../../../../images/twitter.png"
 
 export default function Footer () {
     const [screenWidth, setScreenWidth] = useState(null)

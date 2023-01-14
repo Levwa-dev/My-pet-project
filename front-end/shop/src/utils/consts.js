@@ -11,3 +11,7 @@ export const ADMIN_ADD_PRODUCT = '/admin/product/add'
 export const ADMIN_ORDERS = '/admin/orders'
 export const ADMIN_ORDER = '/admin/order'
 export const ADMIN_ORDER_ADD = '/admin/order/add'
+
+
+// шляхи основної частини сайту
+export const MAIN = '/'

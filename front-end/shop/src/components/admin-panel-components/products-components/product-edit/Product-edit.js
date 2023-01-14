@@ -72,7 +72,7 @@ export default function ProductEdit ({product, categories}) {
                         :
                         'Додаткові фото відстуні'
                     }
-            </div>
+                </div>
         </ProductForm>
     )
 }

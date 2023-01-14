@@ -82,7 +82,6 @@ class OrderController {
     async updateOrder (req, res) {
         try {
             const {id} = req.params
-            console.log(req.body)
             const {orderedProducts, choosedBox, orderInfo} = req.body
             if(orderInfo) await OrderInfo.update({...orderInfo}, {where:{id}})
             if(orderedProducts){
@@ -107,7 +106,6 @@ class OrderController {
             }
             res.json({result:true})
         } catch (e) {
-            console.log(e)
             res.status(500).json({error:'Сталася помилка при редагуванні'})
         }
         

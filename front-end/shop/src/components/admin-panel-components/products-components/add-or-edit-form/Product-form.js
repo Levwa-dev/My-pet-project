@@ -68,8 +68,14 @@ export default function ProductForm ({children, defaultData, categories, sendDat
             <select defaultValue={+currentData.avaliable || 1} onChange={saveData('avaliable')} className="admin__select" id="avaliable">
                 <option value={1}>Так</option>
                 <option value={0}>Ні</option>
-            
             </select>
+
+            <label className="admin__label" htmlFor="bestOffer">Найкраща пропозиція</label>
+            <select defaultValue={+currentData.bestOffer || 0} onChange={saveData('bestOffer')} className="admin__select" id="bestOffer">
+                <option value={0}>Ні</option>
+                <option value={1}>Так</option>
+            </select>
+
             <label className="admin__label" htmlFor="category">Категорія</label>
             <select onChange={saveData('categoryId')} className="admin__select" id="category">
                 { currentData ?

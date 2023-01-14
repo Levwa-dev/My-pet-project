@@ -14,6 +14,7 @@ import AdminOrderAddPage from './pages/admin-pages/Admin-order-add-page'
 
 import LoginPage from './pages/common-pages/Login-page'
 import NotFoundPage from './pages/common-pages/404-page'
+import MainPage from './pages/common-pages/Main-page'
 
 
 
@@ -63,6 +64,10 @@ export const commonRoutes = [
     {
         path: Routes.LOGIN_PAGE,
         component: <LoginPage/>
+    },
+    {
+        path: Routes.MAIN,
+        component: <MainPage/>
     }
    
 ]

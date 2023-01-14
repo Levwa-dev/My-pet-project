@@ -5,11 +5,14 @@ import categoryReducer from "./admin/admin-reducers/category-reducer";
 import productReducer from "./admin/admin-reducers/product-reducer";
 import orderReducer from "./admin/admin-reducers/order-reducer";
 
+import mainPageReducer from "./common/common-reducers/main-page-reducer";
+
 export const store = configureStore({
     reducer:{
         user : userReducer,
         adminCategory : categoryReducer,
         adminProduct : productReducer,
-        adminOrder : orderReducer
+        adminOrder : orderReducer,
+        mainPage : mainPageReducer
     }
 })
