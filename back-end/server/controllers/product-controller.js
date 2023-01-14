@@ -12,6 +12,11 @@ class ProductController {
         const file = req.file
         try {
             const params = req.body
+            console.log(params)
+            if(params.bestOffer) { // якщо є вже наявна краща пропозиція, прибираємо її
+                const currentBestOffer = await Product.findOne({where:{bestOffer:true}})
+                if(currentBestOffer) await Product.update({bestOffer:false}, {where:{id:currentBestOffer.id}})
+            }
             await Product.create({...params, picture: file.filename})
             res.json({result:true})
         } catch (e) {
@@ -118,6 +123,10 @@ class ProductController {
                 req.body.picture = file.filename
                 FilesService.deleteAsyncFile(product.picture, imageDir)
             }
+            if(req.body.bestOffer) { // якщо є вже наявна краща пропозиція, прибираємо її
+                const currentBestOffer = await Product.findOne({where:{bestOffer:true}})
+                if(currentBestOffer) await Product.update({bestOffer:false}, {where:{id:currentBestOffer.id}})
+            }
             await Product.update({...req.body}, {where:{id}})
             res.send(JSON.stringify({result:true}))
         } catch (e) {
@@ -160,7 +169,44 @@ class ProductController {
         }
     }
 
-  
+    async increaseRating (req, res) {
+        try {
+            const {id} = req.query
+            const product = await Product.findOne({where:id})
+            const rating = product.rating + 1
+            await Product.update({rating}, {where:{id}})
+            res.json({result:true})
+        } catch (e) {
+            res.status(500).json({error:"Помилка з'єднання з сервером"})
+        }
+    }
+
+    async showProductsOnMain (req, res) {
+        try {
+            const bestOffer = await Product.findOne({attributes:["id","name","picture","description"], where:{bestOffer:true}})
+            const products = []
+            const categories = ['Морозиво',"Десерти","Солодощі"]
+            for(let categoryName of categories){
+                const category = await Category.findOne({where:{name:categoryName}})
+                const categoryProducts = await Product.findAll({
+                    order: [['rating', 'ASC']],
+                    attributes:["id","name",'price',"picture","description"],
+                    where:{categoryId:category.id},
+                    limit:3,
+                })
+                for(let product of categoryProducts){
+                    product.setDataValue('category', categoryName)
+                    products.push(product)
+                }
+            } 
+            if(!products.length){
+                throw new Error ()
+            }
+            res.json({result:products, bestOffer})      
+        } catch (e) {
+            res.status(500).json({error:"Помилка з'єднання з сервером"})
+        }
+    }
 }
 
 module.exports = new ProductController()

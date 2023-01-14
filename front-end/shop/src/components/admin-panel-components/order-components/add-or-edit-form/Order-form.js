@@ -6,7 +6,7 @@ import styles from './order-form.module.css'
 
 export default function OrderForm ({children, sendData, defaultData, currentData = '', productWithoutBox = [] }) {
     const [data, setData] = useState(defaultData || {...currentData})
-    const [a, setA] = useState(productWithoutBox)
+    const [productWB, setProductWB] = useState(productWithoutBox)
     const [productName, setProductName] = useState({})
     const [boxName, setBoxName] = useState({})
     const [products, setProducts] = useState([])
@@ -96,8 +96,8 @@ export default function OrderForm ({children, sendData, defaultData, currentData
     }
 
     useEffect(()=>{
-        setProductsForChoose([...products, ...a])
-    },[products, a])
+        setProductsForChoose([...products, ...productWB])
+    },[products, productWB])
 
     useEffect(()=>{
         const copy = {...data}

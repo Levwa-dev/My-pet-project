@@ -70,9 +70,9 @@ export default function Product () {
                     <div className='admin__detail-value'>{product.name}</div>
                 </div>
 
-                <div className='admin__detail-content'>
+                <div id={style.productDescriptionContent} className='admin__detail-content'>
                     <div className='admin__detail-name'>Опис</div>
-                    <div className='admin__detail-value'>{product.id}</div>
+                    <div id={style.productDescription} className='admin__detail-value'>{product.description}</div>
                 </div>
 
                 <div className='admin__detail-content'>
@@ -104,6 +104,11 @@ export default function Product () {
                 <div className='admin__detail-content'>
                     <div className='admin__detail-name'>В продажі</div>
                     <div className='admin__detail-value'>{product.avaliable ? 'Так' : 'Ні'}</div>
+                </div>
+
+                <div className='admin__detail-content'>
+                    <div className='admin__detail-name'>Найкраща пропозиція</div>
+                    <div className='admin__detail-value'>{product.bestOffer ? 'Так' : 'Ні'}</div>
                 </div>
 
                 <div className='admin__detail-content'>

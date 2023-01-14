@@ -68,18 +68,6 @@ module.exports = {
       }
     });
 
-    await queryInterface.createTable('main_photo', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      photo: {
-        type: Sequelize.STRING(500)
-      }
-    });
-
     await queryInterface.createTable('call_back', {
       id: {
         allowNull: false,
@@ -136,11 +124,19 @@ module.exports = {
       picture: {
         type: Sequelize.TEXT
       },
+      rating: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      bestOffer: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       oldPrice : {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       date: {
         type: Sequelize.DATE,
