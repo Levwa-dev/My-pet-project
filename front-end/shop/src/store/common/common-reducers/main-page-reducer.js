@@ -24,7 +24,10 @@ export const mainPageSlice = createSlice({
             state.loading = true
         })
         builder.addCase(getMainPageProducts.rejected, (state, action)=>{
-            state.error = action.payload
+            action.payload ? 
+                state.error = action.payload
+                :
+                state.error = action.error.message
             state.loading = false
         })
     }
