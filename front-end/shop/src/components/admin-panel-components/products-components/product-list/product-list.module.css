@@ -18,6 +18,10 @@
     width: 120px;
     text-align: center;
 }
+.list {
+    margin: 0;
+	padding: 0;
+}
 .item {
     max-width: 784px;
     display: block;

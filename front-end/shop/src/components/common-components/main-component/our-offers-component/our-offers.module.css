@@ -10,11 +10,14 @@
     letter-spacing: 2px;
 }
 .categoryList {
+    margin: 0;
+	padding: 0;
     margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(3, auto);
     column-gap: 315px;
     place-content: center;
+    
 }
 .categoryItems {
     font-weight: 700;
@@ -22,6 +25,8 @@
     line-height: 40px;
     letter-spacing: 2px;
     color: #9102A8;
+    cursor: pointer;
+    list-style: none;
 }
 .activeCategory{
     border-bottom: 4px solid #FF006B;
@@ -68,6 +73,13 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.infoDetail  ul {
+    margin-left: 30px;
+}
+.infoDetail  ul  li{
+    margin-left: 30px;
+    padding: 5px 0;
+}
 .bottomBlock {
     display: flex;
     justify-content: center;
@@ -102,7 +114,13 @@
     background: #FA95EA;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    }
+    transition: 1.5s;
+}
+
+.detailLink:hover {
+    background-color: #f960df;
+    color: rgb(247, 255, 204);
+}
 
 @media screen and (max-width: 1600px) {
     .infoPicture {

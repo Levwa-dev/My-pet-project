@@ -39,7 +39,7 @@ export default function OrderList () {
                     <div className={styles.titleItem}>Ціна</div>
                     <div className={styles.titleItem}>Замовленно</div>
                 </div>
-                <ul>
+                <ul className={styles.list}>
                     {  state.orders.map((item)=>{
                             return (
                                 <li className={styles.item} key={item.id}>

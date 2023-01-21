@@ -15,3 +15,4 @@ export const ADMIN_ORDER_ADD = '/admin/order/add'
 
 // шляхи основної частини сайту
 export const MAIN = '/'
+export const PRODUCT = '/product'

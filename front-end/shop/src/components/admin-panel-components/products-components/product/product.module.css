@@ -97,3 +97,13 @@
      display: grid;
     place-items: center;
 }
+#productDescriptionContent  p {
+    padding-bottom: 20px;
+}
+#productDescriptionContent  ul {
+    margin-left: 30px;
+}
+#productDescriptionContent  ul  li{
+    margin-left: 30px;
+    padding: 5px 0;
+}

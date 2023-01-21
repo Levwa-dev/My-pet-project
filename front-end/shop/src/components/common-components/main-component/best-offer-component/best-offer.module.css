@@ -26,6 +26,13 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+.description  ul {
+    margin-left: 30px;
+}
+.description ul  li{
+    margin-left: 30px;
+    padding: 5px 0;
+}
 .info {
     max-width: 715px;
 }
@@ -52,6 +59,12 @@
     text-align: center;
     letter-spacing: 2px;
     color: #FFFFFF;
+    transition: 1.5s;
+}
+
+.detailLink:hover {
+    background-color: #f960df;
+    color: rgb(247, 255, 204);
 }
 
 @media screen and (max-width: 1600px) {

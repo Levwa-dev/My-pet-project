@@ -32,6 +32,10 @@ class ProductController {
             if(!product){
                 return res.status(404).json({error:'Такого товару не знайдено'})
             }
+            if(req.originalUrl === `/shop/product/${id}`) {
+                const rating = product.rating + 1
+                await Product.update({rating}, {where:{id}})
+            }
             const productPictures = await product.getProductPictures()
             const category = await product.getCategory()
             product.setDataValue('pictures', productPictures)
@@ -168,19 +172,7 @@ class ProductController {
             res.status(500).json({error:'Помилка видалення даних'})
         }
     }
-
-    async increaseRating (req, res) {
-        try {
-            const {id} = req.query
-            const product = await Product.findOne({where:id})
-            const rating = product.rating + 1
-            await Product.update({rating}, {where:{id}})
-            res.json({result:true})
-        } catch (e) {
-            res.status(500).json({error:"Помилка з'єднання з сервером"})
-        }
-    }
-
+    
     async showProductsOnMain (req, res) {
         try {
             const bestOffer = await Product.findOne({attributes:["id","name","picture","description"], where:{bestOffer:true}})
@@ -189,9 +181,9 @@ class ProductController {
             for(let categoryName of categories){
                 const category = await Category.findOne({where:{name:categoryName}})
                 const categoryProducts = await Product.findAll({
-                    order: [['rating', 'ASC']],
+                    order: [['rating', 'DESC']],
                     attributes:["id","name",'price',"picture","description"],
-                    where:{categoryId:category.id},
+                    where:{categoryId:category.id, bestOffer:false},
                     limit:3,
                 })
                 for(let product of categoryProducts){

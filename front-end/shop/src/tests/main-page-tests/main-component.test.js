@@ -46,7 +46,7 @@ const mockSelector = jest.spyOn(reduxHooks, 'useSelector')
 const mockDispatch = jest.spyOn(reduxHooks, 'useDispatch')
 
 describe('Main component', ()=>{
-    it("Main component renders with data", async()=>{
+    it("Main component renders with data", ()=>{
         const dispatch = jest.fn()
         mockDispatch.mockReturnValue(dispatch)
         mockSelector.mockReturnValue(mockData)
@@ -55,7 +55,7 @@ describe('Main component', ()=>{
         expect(screen.getByRole('main-info')).toBeInTheDocument()
     })
 
-    it('Main component render loading component', async()=>{
+    it('Main component render loading component', ()=>{
         const dispatch = jest.fn()
         mockDispatch.mockReturnValue(dispatch)
         mockData.loading=true
