@@ -8,6 +8,10 @@ export const commonProductService = {
     async getProduct (id) {
         const response = await commonAxios.get(`/product/${id}`)
         return response.data
+    },
+    async getProductList (page, category) {
+        const response = await commonAxios.get(`/product/list/${page}/${category}`)
+        return response.data
     }
 
 }

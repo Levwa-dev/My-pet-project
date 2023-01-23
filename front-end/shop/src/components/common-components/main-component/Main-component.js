@@ -20,7 +20,7 @@ export default function MainComponent () {
     },[])
   
     return (
-        <main>
+        <main className={styles.main}>
             { error ?
                 <div className={styles.loadingOrErrorBody}>
                     <ErrorOccurred error={error}/>

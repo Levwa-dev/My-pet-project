@@ -39,7 +39,8 @@ const mockData = {
         name: 'ice cream',
         description: 'ice desc',
         picture: 'asdw.png'
-    }
+    },
+    currentCategory:{name:'Морозиво'}
 }
 
 const mockSelector = jest.spyOn(reduxHooks, 'useSelector')

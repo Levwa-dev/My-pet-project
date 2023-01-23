@@ -92,6 +92,7 @@
 }
 #productDescription {
     max-width: 600px;
+    text-align: justify;
 }
 #productDescriptionContent {
      display: grid;

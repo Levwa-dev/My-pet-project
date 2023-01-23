@@ -1,32 +1,37 @@
 import React, {useEffect, useState } from "react"
 import styles from './our-offers.module.css'
 
-import uah from '../../../../images/uah.png'
-
-import {PRODUCT} from '../../../../utils/consts'
-import { Link } from 'react-router-dom'
+import { PRODUCT_LIST } from "../../../../utils/consts"
+import ProductListItem from "../../product-list`s-item/ProductListItem"
+import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { setCurrentCategory } from "../../../../store/common/common-reducers/products-reducer"
 
 export default function OurOffers ({products}) {
-    const [currentCategory, setCurrentCategory] = useState({name:'Морозиво'})
+    const {currentCategory} = useSelector(state=>state.commonProducts)
+    const dispatch = useDispatch()
     const [productToShow, setProductToShow] = useState([])
 
     useEffect(()=>{
+        console.log(currentCategory.name)
         const productList = products.filter(item => item.category === currentCategory.name)
+        const category = document.getElementsByClassName(styles.categoryItems)
+        for(let item of category){
+            if(item.textContent === currentCategory.name){
+                item.classList.add(styles.activeCategory)
+            }
+        }
         setProductToShow(productList)
     },[currentCategory])
 
-    const selectCategory = (key) => () => {
-        setCurrentCategory({name:key})
-    }
-
-    const showCurrentCategory = (className, childClass) => (e) => {
+    const selectCategory = (key) => (e) => {
         const click = e.target
-        if(click.tagName === 'UL') return
-        const items = document.getElementsByClassName(childClass)
+        const items = document.getElementsByClassName(styles.categoryItems)
         for(let item of items){
-            item.classList.remove(className)
+            item.classList.remove(styles.activeCategory)
         }
-        click.classList.add(className)
+        click.classList.add(styles.activeCategory)
+        dispatch(setCurrentCategory({name:key}))
     }
 
     return (
@@ -34,33 +39,13 @@ export default function OurOffers ({products}) {
             <div className="wrapper">
                 <a name="offers"></a>
                 <h2 className={styles.title}>Наші пропозиції</h2>
-                <ul onClick={showCurrentCategory(styles.activeCategory, styles.categoryItems )} className={styles.categoryList}>
-                    <li className={[styles.categoryItems, styles.activeCategory ].join(' ')} onClick={selectCategory('Морозиво')}>Морозиво</li>
+                <ul className={styles.categoryList}>
+                    <li className={styles.categoryItems} onClick={selectCategory('Морозиво')}>Морозиво</li>
                     <li className={styles.categoryItems} onClick={selectCategory('Десерти')}>Десерти</li> 
                     <li className={styles.categoryItems} onClick={selectCategory('Солодощі')}>Солодощі</li>  
                 </ul>
-                <div className={styles.content}>
-                    { productToShow
-                        && productToShow.map((item)=>{
-                            return(
-                                <div key={item.id} className={styles.item}>
-                                    <img className={styles.infoPicture} src={process.env.REACT_APP_BACK_END_HOST + '/product-photo/' + item.picture} alt='Фото товару' />
-                                    <div className={styles.info}>
-                                        <h3 className={styles.infoTitle}>{item.name}</h3>
-                                        <p className={styles.infoDetail} dangerouslySetInnerHTML={{__html: item.description}}></p>
-                                        <div className={styles.bottomBlock}>
-                                            <div className={styles.priceBlock}>
-                                                <p className={styles.price}>{item.price}</p>
-                                                <img className={styles.priceCurrency} src={uah} alt="Грн."/>
-                                            </div>
-                                            <Link to={PRODUCT + '/' + item.id} className={styles.detailLink}>Купити зараз</Link>
-                                        </div>
-                                    </div>
-                                </div>   
-                            )
-                        })     
-                    }
-                </div>    
+                <ProductListItem products={productToShow}/> 
+                <Link className={styles.moreLink} to={`${PRODUCT_LIST}/${productToShow[0]?.categoryId}`}>Більше</Link>
             </div> 
         </section>
     )

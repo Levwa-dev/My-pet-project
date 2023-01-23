@@ -13,7 +13,7 @@ export default function BestOffer ({bestOffer={}}) {
                         <div className={styles.container}>
                             <div className={styles.info}>
                                 <h2 className={styles.name}>{bestOffer.name}</h2>
-                                <p className={styles.description}>{bestOffer.description}</p>
+                                <div className={styles.description} dangerouslySetInnerHTML={{__html:bestOffer.description}}></div>
                                 <Link className={styles.detailLink} to={PRODUCT+'/'+bestOffer.id}>Детальніше</Link>
                             </div>
                             { bestOffer.picture &&

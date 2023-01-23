@@ -31,182 +31,44 @@
 .activeCategory{
     border-bottom: 4px solid #FF006B;
 }
-.content {
-    margin: 60px 0;
-}
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 60px;
-}
-.item:nth-child(even) {
-    flex-direction: row-reverse;
-}
-.item:nth-child(even) > .infoPicture {
-    margin-right: 0;
-    margin-left: 35px;
-}
-.info {
-    max-width: 818px;
-}
-.infoPicture {
-    display: block;
-    width: 740px;
-    height: 415px;
-    object-fit: contain;
-}
-.infoTitle {
-    text-align: center;
-    font-weight: 700;
-    font-size: 38px;
-    line-height: 40px;
-    letter-spacing: 2px;
-}
-.infoDetail {
-    font-weight: 300;
-    font-size: 26px;
-    line-height: 40px;
-    letter-spacing: 2px;
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.infoDetail  ul {
-    margin-left: 30px;
-}
-.infoDetail  ul  li{
-    margin-left: 30px;
-    padding: 5px 0;
-}
-.bottomBlock {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-.priceBlock {
-    display: flex;
-    align-items: center;
-    margin-right: 46px;
-}
-.price {
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 45px;
-    letter-spacing: 2px;
-    margin-right: 35px;
-}
-.priceCurrency {
-    width: 25px;
-    height: 45px;
-}
-.detailLink {
-    display: block;
+.moreLink {
+    width: 225px;
+    height: 80px;
+    background-color: #FA95EA;
     color: #fff;
+    display: block;
+    margin: 0 auto;
     text-align: center;
-    line-height: 58px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 28px;
-    width: 290px;
-    height: 60px;
-    background: #FA95EA;
+    line-height: 80px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: 700;
     transition: 1.5s;
 }
-
-.detailLink:hover {
-    background-color: #f960df;
-    color: rgb(247, 255, 204);
+.moreLink:hover {
+    background-color: #ff76e8;
+    color: rgb(254, 255, 171);
 }
-
 @media screen and (max-width: 1600px) {
-    .infoPicture {
-        width: 620px;
-        height: 415px;
-    }
-    .info {
-        max-width: 680px;
-    }
     .categoryList {
         column-gap: 260px;
     }
     .title {
         font-size: 36px;
     }
-    .infoTitle {
-        font-size: 32px;
-    }
-    .infoDetail {
-        font-size: 22px;
-    }
-    .price {
-        font-size: 30px;
-    }
-    .priceCurrency {
-        width: 20px;
-        height: 37px;
-    }
-    .detailLink {
-        font-size: 20px;
-        width: 190px;
-        height: 50px;
-        line-height: 48px;
-    }
 }
 
 @media screen and (max-width: 1450px) {
-    .infoPicture {
-        width: 520px;
-        height: 395px;
-        margin-right:30px
-    }
-    .info {
-        max-width: 545px;
-    }
     .categoryList {
         column-gap: 190px;
-    }
-}
-
-@media screen and (max-width: 1235px) {
-    .infoPicture {
-        width: 400px;
-        height: 350px;
-        margin-right:30px
-    }
-    .infoDetail {
-        font-size: 18px;
-    }
-    .detailLink {
-        width: 177px;
-    }
-    .priceBlock {
-        margin-right: 25px;
     }
 }
 
 @media screen and (max-width: 835px) {
     .categoryList {
         column-gap: 145px;
-    }
-    .item {
-        flex-direction: column;
-        justify-content: center;
-    }
-    .infoPicture{
-        margin: 0;
-    }
-    .item:nth-child(even) {
-        flex-direction: column;
-    }
-    .item:nth-child(even) > .infoPicture {
-        margin: 0;
-    }
-    .infoDetail {
-        text-align: justify;
     }
 }
 
@@ -225,28 +87,13 @@
 }
 
 @media screen and (max-width: 430px) {
-    .infoTitle {
-        font-size: 22px;
-    }
-    .infoDetail {
-        font-size: 14px;
-    }
     .categoryList> li {
         font-size: 18px;
     }
-    .price {
-        font-size: 25px;
-        margin-right: 10px;
-    }
-    .priceCurrency{
-        width: 20px;
-        height: 30px;
-    }
-    .infoPicture{
-        width: 310px;
-    }
-    .detailLink {
-        font-size: 18px;
-        width: 157px;
+    .moreLink {
+        width: 180px;
+        height: 60px;
+        line-height: 60px;
+        font-size: 24px;
     }
 }

@@ -14,8 +14,8 @@ export default function ProductForm ({children, defaultData, categories, sendDat
     const [data, setData] = useState(defaultData || currentData)
     const defaultDescription = EditorState.createWithContent(
                                     ContentState.createFromBlockArray(
-                                        convertFromHTML(currentData.description)))
-    const [editor, setEditor] = useState(defaultDescription || EditorState.createEmpty())
+                                        convertFromHTML(currentData.description || '')))
+    const [editor, setEditor] = useState(defaultDescription)
     const dispatch = useDispatch()
     
     const saveData = (key) => (e) => {

@@ -29,6 +29,7 @@
 }
 .socials > li {
     margin-right: 55px;
+    list-style: none;
 }
 .socials > li:nth-last-child(-n+1) {
     margin-right: 0;

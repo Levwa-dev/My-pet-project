@@ -18,3 +18,20 @@ export const getProduct = createAsyncThunk(
         }
     }
 )
+
+export const getProductList = createAsyncThunk(
+    'commonProducts/getProductList',
+    async(data, {rejectWithValue}) => {
+        try {
+            const {page, category, productList} = data
+            const response = await commonProductService.getProductList(page, category)
+            if(response.error) {
+                return rejectWithValue(response.error)
+            }
+            response.result = [...productList, ...response.result]
+            return response
+        } catch (e) {
+            return rejectWithValue(error)
+        }
+    }
+)

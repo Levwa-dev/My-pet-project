@@ -1,3 +1,6 @@
+.main {
+    min-height: 100vh;
+}
 .mainInfo {
     padding: 60px 0;
     background-color: #FCDFE9;

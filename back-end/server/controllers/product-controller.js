@@ -90,9 +90,10 @@ class ProductController {
 
     async showProductList(req, res) {
         try {
-            const {orderedBy = 'ASC', category} = req.query
+            const {orderedBy = 'DESC'} = req.query
+            const {page, category} = req.params
             const productCount = await Product.findAndCountAll({where:{categoryId:category}})
-            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, req.params.page)
+            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, page)
             const products = await Product.findAll({
                 order: [['price', orderedBy]],
                 where:{categoryId:category},
@@ -101,6 +102,10 @@ class ProductController {
             })
             if(!products.length){
                 return res.status(404).json({error:'Невірно вказана сторінка'})
+            }
+            const {name} = await Category.findOne({where:{id:category}})
+            for(let product of products){
+                product.setDataValue('category', name)
             }
             res.json({result:products, pages})
         } catch (e) {
@@ -182,7 +187,7 @@ class ProductController {
                 const category = await Category.findOne({where:{name:categoryName}})
                 const categoryProducts = await Product.findAll({
                     order: [['rating', 'DESC']],
-                    attributes:["id","name",'price',"picture","description"],
+                    attributes:["id","name",'price',"picture","description", "categoryId"],
                     where:{categoryId:category.id, bestOffer:false},
                     limit:3,
                 })
@@ -194,6 +199,7 @@ class ProductController {
             if(!products.length){
                 throw new Error ()
             }
+            console.log(products)
             res.json({result:products, bestOffer})      
         } catch (e) {
             res.status(500).json({error:"Помилка з'єднання з сервером"})
