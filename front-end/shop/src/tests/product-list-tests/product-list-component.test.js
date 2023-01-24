@@ -1,18 +1,16 @@
-import {render, screen} from "@testing-library/react"
-import { MemoryRouter } from "react-router-dom"
-import * as reduxHooks from "react-redux"
-
+import {screen, waitFor} from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+import axios from 'axios'
+import { commonProductService } from "../../services/common-services/product-service"
+import { renderWithProviders } from "../../utils/utils-for-test-redux-component"
 import ProductList from "../../components/common-components/product-list-component/ProductList"
 
-
-jest.mock('react-redux')
-
-const mockSelector = jest.spyOn(reduxHooks, 'useSelector')
-const mockDispatch = jest.spyOn(reduxHooks, 'useDispatch')
+window.alert = jest.fn()
+jest.mock("axios")
 
 const mockData = {
-    currentCategory:{name:'Морозиво'},
-    productList:[
+    pages:2,
+    result:[
         {
             id:1,
             picture:'ice-cream.png',
@@ -34,36 +32,87 @@ const mockData = {
     ]
 }
 
+const moreProducts = {
+    pages:2,
+    result:[
+        {
+            id:3,
+            picture:'candy.png',
+            name:'candy',
+            description:'candyDesc',
+            price: 122,
+            category: 'Морозиво',
+            categoryId: 2
+        },
+    ]
+}
+
 describe("Product list component", ()=>{
-    it("Product list component renders with data", ()=>{
-        const dispatch = jest.fn()
-        mockDispatch.mockReturnValue(dispatch)
-        mockSelector.mockReturnValue(mockData)
-
-        render(<ProductList/>, {wrapper: MemoryRouter})
-        expect(screen.getByText('Морозиво')).toBeInTheDocument()
-        expect(screen.getByText('ice')).toBeInTheDocument()
-        expect(screen.getByText('dessert')).toBeInTheDocument()
+    
+    it("Product list component renders with data", async()=>{
+        commonProductService.getProductList = axios.get.mockResolvedValue(mockData)
+        renderWithProviders(<ProductList/>)
+        await waitFor(()=>{
+            expect(screen.getByText('Морозиво')).toBeInTheDocument()
+            expect(screen.getByText('ice')).toBeInTheDocument()
+            expect(screen.getByText('dessert')).toBeInTheDocument()
+        })
     })
 
-    it("Product list component renders an error", ()=>{
-        const dispatch = jest.fn()
-        mockDispatch.mockReturnValue(dispatch)
-        mockData.error="Error"
-        mockSelector.mockReturnValue(mockData)
-
-        render(<ProductList/>, {wrapper:MemoryRouter})
-        expect(screen.getByText('Error')).toBeInTheDocument()
+    it("Product list component renders an error", async()=>{
+        commonProductService.getProductList = axios.get.mockResolvedValue({error:"Error"})
+        renderWithProviders(<ProductList/>)
+        await waitFor(()=>{
+            expect(screen.getByText('Error')).toBeInTheDocument()
+        })
     })
-    it("Product list component renders loading component", ()=>{
-        const dispatch = jest.fn()
-        mockDispatch.mockReturnValue(dispatch)
-        mockData.error=''
-        mockData.loading = true
-        mockSelector.mockReturnValue(mockData)
 
-        render(<ProductList/>, {wrapper:MemoryRouter})
+    it("Product list component renders loading component", async()=>{
+        commonProductService.getProductList = axios.get.mockResolvedValue(mockData)
+        renderWithProviders(<ProductList/>)
+
         expect(screen.getByText('Loading...')).toBeInTheDocument()
+        await waitFor(()=>{
+            expect(screen.getByText('Морозиво')).toBeInTheDocument()
+            expect(screen.getByText('ice')).toBeInTheDocument()
+            expect(screen.getByText('dessert')).toBeInTheDocument()
+        })
     })
 
+    it("Show more products action works", async()=>{
+        commonProductService.getProductList = axios.get.mockResolvedValue(mockData)
+        renderWithProviders(<ProductList/>)
+        await waitFor(()=>{
+            expect(screen.getByText('Морозиво')).toBeInTheDocument()
+            expect(screen.getByText('ice')).toBeInTheDocument()
+            expect(screen.getByText('dessert')).toBeInTheDocument()
+
+            commonProductService.getProductList = axios.get.mockResolvedValue(moreProducts)
+            userEvent.click(screen.getByText('Завантажити ще'))
+            expect(screen.getByText('candy'))
+        })
+    })
+
+    it("Change category", async()=>{
+        const anotherCategory = {
+            pages:2,
+            result:[
+                {
+                    id:3,
+                    picture:'candy.png',
+                    name:'candy',
+                    description:'candyDesc',
+                    price: 122,
+                    category: 'Десерти',
+                    categoryId: 2
+                },
+            ]
+        }
+        commonProductService.getProductList = axios.get.mockResolvedValue(anotherCategory)
+        renderWithProviders(<ProductList/>)
+        await waitFor(()=>{
+            expect(screen.getByText('Десерти')).toBeInTheDocument()
+            expect(screen.getByText('candy')).toBeInTheDocument()
+        })
+    })
 })

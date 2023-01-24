@@ -13,7 +13,6 @@ export default function OurOffers ({products}) {
     const [productToShow, setProductToShow] = useState([])
 
     useEffect(()=>{
-        console.log(currentCategory.name)
         const productList = products.filter(item => item.category === currentCategory.name)
         const category = document.getElementsByClassName(styles.categoryItems)
         for(let item of category){
