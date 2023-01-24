@@ -32,6 +32,10 @@ class ProductController {
             if(!product){
                 return res.status(404).json({error:'Такого товару не знайдено'})
             }
+            if(req.originalUrl === `/shop/product/${id}`) {
+                const rating = product.rating + 1
+                await Product.update({rating}, {where:{id}})
+            }
             const productPictures = await product.getProductPictures()
             const category = await product.getCategory()
             product.setDataValue('pictures', productPictures)
@@ -86,9 +90,10 @@ class ProductController {
 
     async showProductList(req, res) {
         try {
-            const {orderedBy = 'ASC', category} = req.query
+            const {orderedBy = 'DESC'} = req.query
+            const {page, category} = req.params
             const productCount = await Product.findAndCountAll({where:{categoryId:category}})
-            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, req.params.page)
+            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, page)
             const products = await Product.findAll({
                 order: [['price', orderedBy]],
                 where:{categoryId:category},
@@ -97,6 +102,10 @@ class ProductController {
             })
             if(!products.length){
                 return res.status(404).json({error:'Невірно вказана сторінка'})
+            }
+            const {name} = await Category.findOne({where:{id:category}})
+            for(let product of products){
+                product.setDataValue('category', name)
             }
             res.json({result:products, pages})
         } catch (e) {
@@ -168,19 +177,7 @@ class ProductController {
             res.status(500).json({error:'Помилка видалення даних'})
         }
     }
-
-    async increaseRating (req, res) {
-        try {
-            const {id} = req.query
-            const product = await Product.findOne({where:id})
-            const rating = product.rating + 1
-            await Product.update({rating}, {where:{id}})
-            res.json({result:true})
-        } catch (e) {
-            res.status(500).json({error:"Помилка з'єднання з сервером"})
-        }
-    }
-
+    
     async showProductsOnMain (req, res) {
         try {
             const bestOffer = await Product.findOne({attributes:["id","name","picture","description"], where:{bestOffer:true}})
@@ -189,9 +186,9 @@ class ProductController {
             for(let categoryName of categories){
                 const category = await Category.findOne({where:{name:categoryName}})
                 const categoryProducts = await Product.findAll({
-                    order: [['rating', 'ASC']],
-                    attributes:["id","name",'price',"picture","description"],
-                    where:{categoryId:category.id},
+                    order: [['rating', 'DESC']],
+                    attributes:["id","name",'price',"picture","description", "categoryId"],
+                    where:{categoryId:category.id, bestOffer:false},
                     limit:3,
                 })
                 for(let product of categoryProducts){
@@ -202,6 +199,7 @@ class ProductController {
             if(!products.length){
                 throw new Error ()
             }
+            console.log(products)
             res.json({result:products, bestOffer})      
         } catch (e) {
             res.status(500).json({error:"Помилка з'єднання з сервером"})

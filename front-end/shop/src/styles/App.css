@@ -5,6 +5,9 @@
     padding: 0 85px;
     margin: 0 auto;
 }
+li.slick-active > button {
+    background-color: #F389AE !important;
+}
 
 @media screen and (max-width: 1600px) {
     .wrapper {

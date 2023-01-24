@@ -6,6 +6,7 @@ import productReducer from "./admin/admin-reducers/product-reducer";
 import orderReducer from "./admin/admin-reducers/order-reducer";
 
 import mainPageReducer from "./common/common-reducers/main-page-reducer";
+import commonProductsReducer from "./common/common-reducers/products-reducer"
 
 export const store = configureStore({
     reducer:{
@@ -13,6 +14,7 @@ export const store = configureStore({
         adminCategory : categoryReducer,
         adminProduct : productReducer,
         adminOrder : orderReducer,
-        mainPage : mainPageReducer
+        mainPage : mainPageReducer,
+        commonProducts : commonProductsReducer
     }
 })

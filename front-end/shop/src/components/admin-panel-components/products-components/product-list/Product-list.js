@@ -50,7 +50,7 @@ export default function ProductList () {
                         <div>Категорія</div>
                         <div>Додано</div>
                     </div>
-                    <ul>
+                    <ul className={style.list}>
                         {
                             state.productList.map((item)=>{
                                 return (

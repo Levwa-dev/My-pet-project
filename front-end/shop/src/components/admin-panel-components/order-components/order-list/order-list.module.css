@@ -19,6 +19,10 @@
 #titleId, #dataItemId  {
     width: 50px;
 }
+.list{
+    margin: 0;
+	padding: 0;
+}
 .item {
     max-width: 784px;
     display: block;

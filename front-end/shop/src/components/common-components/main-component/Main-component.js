@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { getMainPageProducts } from "../../../store/common/common-actions/main-page-action"
 
 import styles from './main-component.module.css'
-import { Link } from "react-router-dom"
 import mainPhoto from "../../../images/main_photo.png"
 
 export default function MainComponent () {
@@ -21,7 +20,7 @@ export default function MainComponent () {
     },[])
   
     return (
-        <main>
+        <main className={styles.main}>
             { error ?
                 <div className={styles.loadingOrErrorBody}>
                     <ErrorOccurred error={error}/>
@@ -33,7 +32,7 @@ export default function MainComponent () {
                     </div>
                     :
                     <>
-                        <section className={styles.mainInfo}>
+                        <section role={'main-info'} className={styles.mainInfo}>
                             <div className="wrapper">
                                 <div className={styles.mainContainer}>
                                     <div className={styles.mainText}>

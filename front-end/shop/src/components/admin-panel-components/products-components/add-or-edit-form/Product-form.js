@@ -1,18 +1,27 @@
 import React, {useState, useEffect} from "react";
 import FormsLayout from "../../ui-components/forms-layout/Forms-layout";
 
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, ContentState, convertFromHTML} from 'draft-js'
+import { convertToHTML } from 'draft-convert';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
+import styles from "./product-form.module.css"
 import { adminFetchProductsCategories } from "../../../../store/admin/admin-actions/product-actions";
 import { useDispatch } from "react-redux";
 
 export default function ProductForm ({children, defaultData, categories, sendData, currentData = ''}) {
     const [data, setData] = useState(defaultData || currentData)
+    const defaultDescription = EditorState.createWithContent(
+                                    ContentState.createFromBlockArray(
+                                        convertFromHTML(currentData.description || '')))
+    const [editor, setEditor] = useState(defaultDescription)
     const dispatch = useDispatch()
-
+    
     const saveData = (key) => (e) => {
         let value = e.target.value
         const copy = {...data}
         if(key==='picture') value = e.target.files[0]
-
         if(key === 'sale' || key === 'avaliable') {
             copy[key] = Boolean(Number(value))
             if(key === 'sale' && Number(value)) {
@@ -37,14 +46,25 @@ export default function ProductForm ({children, defaultData, categories, sendDat
         dispatch(adminFetchProductsCategories())
     },[])
 
+    useEffect(()=>{
+        let html = convertToHTML(editor.getCurrentContent())
+        setData({...data, description:html})
+    },[editor])
+
     return (
         <FormsLayout sendData={sendData} data={data}>
             <label className="admin__label" htmlFor="name">Назва</label>
             <input defaultValue={currentData.name} onChange={saveData('name')} id="name" className="admin__input"/>
-            
-            <label className="admin__label" htmlFor="description">Опис</label>
-            <textarea defaultValue={currentData.description} onChange={saveData('description')} id="description" type='text' className="admin__textarea"/>
-            
+
+            <p className="admin__label">Опис</p>
+            <Editor
+                editorState={editor}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName = {styles.editor}
+                onEditorStateChange={setEditor}
+                />
+
             <label className="admin__label" htmlFor="sale">Знижка</label>
             <select defaultValue={+currentData.sale || 0} onChange={saveData('sale')} className="admin__select" id='sale'>
                 <option value={0}>Ні</option>

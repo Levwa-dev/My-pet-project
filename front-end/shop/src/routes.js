@@ -15,6 +15,8 @@ import AdminOrderAddPage from './pages/admin-pages/Admin-order-add-page'
 import LoginPage from './pages/common-pages/Login-page'
 import NotFoundPage from './pages/common-pages/404-page'
 import MainPage from './pages/common-pages/Main-page'
+import ProductPage from './pages/common-pages/Product-page'
+import ProductListPage from './pages/common-pages/Product-list-page'
 
 
 
@@ -68,6 +70,14 @@ export const commonRoutes = [
     {
         path: Routes.MAIN,
         component: <MainPage/>
+    },
+    {
+        path: Routes.PRODUCT + '/:id',
+        component: <ProductPage/>
+    },
+    {
+        path: Routes.PRODUCT_LIST + '/:category',
+        component: <ProductListPage/>
     }
    
 ]

@@ -6,8 +6,9 @@ const productController = require('../../../controllers/product-controller')
 
 router.use(express.json())
 
-router.get('/increase', productController.increaseRating)
 router.get('/show-products-on-main', productController.showProductsOnMain)
+router.get('/list/:page/:category', productController.showProductList)
+router.get('/:id', productController.showProduct)
 
 
 module.exports = router

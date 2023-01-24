@@ -72,7 +72,7 @@ export default function Product () {
 
                 <div id={style.productDescriptionContent} className='admin__detail-content'>
                     <div className='admin__detail-name'>Опис</div>
-                    <div id={style.productDescription} className='admin__detail-value'>{product.description}</div>
+                    <div id={style.productDescription} className='admin__detail-value' dangerouslySetInnerHTML={{__html:product.description}}/>
                 </div>
 
                 <div className='admin__detail-content'>
