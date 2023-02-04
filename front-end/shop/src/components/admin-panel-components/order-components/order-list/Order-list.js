@@ -15,7 +15,6 @@ export default function OrderList () {
             {searchField: 'id', title:"Знайти за ID"},
             {searchField: 'firstName', title:"Знайти за ім'ям"},
             {searchField: 'lastName', title:"Знайти за прізвищем"},
-            {searchField: 'patronymic', title:"Знайти по батькові"},
             {searchField: 'orderNumber', title:"Знайти за номером замовлення"},
             {searchField: 'telephone', title:"Знайти за номером телефону"}
         ]

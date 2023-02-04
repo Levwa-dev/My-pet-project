@@ -6,5 +6,6 @@ const categoryController = require('../../../controllers/category-controller')
 
 router.use(express.json())
 
+router.get('/box-category', categoryController.showBoxCategory)
 
 module.exports = router

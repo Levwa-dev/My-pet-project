@@ -12,7 +12,6 @@ class ProductController {
         const file = req.file
         try {
             const params = req.body
-            console.log(params)
             if(params.bestOffer) { // якщо є вже наявна краща пропозиція, прибираємо її
                 const currentBestOffer = await Product.findOne({where:{bestOffer:true}})
                 if(currentBestOffer) await Product.update({bestOffer:false}, {where:{id:currentBestOffer.id}})
@@ -92,11 +91,11 @@ class ProductController {
         try {
             const {orderedBy = 'DESC'} = req.query
             const {page, category} = req.params
-            const productCount = await Product.findAndCountAll({where:{categoryId:category}})
-            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, page)
+            const productCount = await Product.findAndCountAll({where:{categoryId:category, avaliable:true}})
+            const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 10, page)
             const products = await Product.findAll({
                 order: [['price', orderedBy]],
-                where:{categoryId:category},
+                where:{categoryId:category, avaliable:true},
                 limit,
                 offset
             })
@@ -188,7 +187,7 @@ class ProductController {
                 const categoryProducts = await Product.findAll({
                     order: [['rating', 'DESC']],
                     attributes:["id","name",'price',"picture","description", "categoryId"],
-                    where:{categoryId:category.id, bestOffer:false},
+                    where:{categoryId:category.id, bestOffer:false, avaliable:true},
                     limit:3,
                 })
                 for(let product of categoryProducts){
@@ -199,7 +198,6 @@ class ProductController {
             if(!products.length){
                 throw new Error ()
             }
-            console.log(products)
             res.json({result:products, bestOffer})      
         } catch (e) {
             res.status(500).json({error:"Помилка з'єднання з сервером"})

@@ -1,0 +1,303 @@
+.mainBody {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+.title, .empty {
+    margin: 40px 0;
+    text-align: center;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+.empty {
+    margin: 0;
+    padding: 50vh 0;
+}
+.titleFoBox {
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    letter-spacing: 1.5px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+.textInTitle {
+    color: #FE46F7;
+}
+.list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.listItem {
+    padding: 0 10px;
+    list-style: none;
+}
+.productImage {
+    width: 700px;
+    height: 600px;
+    object-fit: contain;
+}
+.productName {
+    margin-top: 15px;
+    font-size: 28px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-align: center;
+}
+.quantity {
+    margin: 0 100px;
+    font-weight: 700;
+    font-size: 28px;
+}
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+}
+.orderListsContainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+.containersList {
+    margin-left: 100px;
+}
+
+.orderedTitle {
+    margin: 30px 0;
+    text-align: center;
+    font-weight: 700;
+    font-size: 36px;
+    letter-spacing: 1.5px;
+}
+.orderedList {
+    width: 690px;
+    margin: 0 auto;
+    padding-bottom: 15px;
+}
+.orderedListContent {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    border-bottom: 1px solid #000;
+    align-items: center;
+}
+.orderedInfo {
+    margin-right: 5px;
+    text-align: center;
+}
+.quantityOfProducts {
+    min-width: 40px;
+    font-size: 20px;
+    margin-right: 5px;
+}
+.orderedName {
+    text-align: left;
+}
+.orderedName, .orderedPrice {
+    width: 500px;
+    letter-spacing: 1.5px;
+    line-height: 30px;
+    font-size: 22px;  
+}
+.orderedPrice{
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+.delete {
+    width: 40px;
+    height: 60px;
+    cursor: pointer;
+}
+.addBox {
+    margin: 0 auto;
+    text-align: center;
+    line-height: 60px;
+    width: 300px;
+    height: 60px;
+    display: block;
+    text-decoration: none;
+    background-color: #FA95EA;
+    border-radius: 20px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    transition: 1.5s;
+}
+.addBox:hover, .deliverBtn:hover {
+    background-color: #ff3ade;
+    color: #f3fa95;
+}
+.chooseBox {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: 1.5px;
+}
+.checkLabel {
+    display: block;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: 1.5px;
+    position: relative;
+    cursor: pointer;
+    padding-left: 32px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: left;
+}
+.productForChooseList {
+    list-style: none;
+    margin-bottom: 30px;
+}
+.checkLabel input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark {
+    position: absolute;
+    top: 7px;
+    left: 0;
+    height: 17px;
+    width: 17px;
+    background-color: #eee;
+}
+.checkLabel:hover input ~ .checkmark {
+    background-color: #F0B4EA;
+}
+.checkLabel input:checked ~ .checkmark {
+    background-color: #F0B4EA;
+}
+.containerName {
+    font-size: 22px;
+    font-style: italic;
+}
+.chooseBoxList {
+    width: 400px;
+    text-align: center;
+    margin: 0 auto;
+
+}
+.totalPrice {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 40px 0;   
+}
+
+.deliverBtn {
+    display: block;
+    margin: 30px auto;
+    width: 225px;
+    height: 80px;
+    background-color: #FA95EA;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border: none;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: 1.5s;
+}
+
+@media screen and (max-width: 1610px) {
+  .title {
+    font-size: 30px;
+  }
+  .productImage{
+    width: 400px;
+    height: 300px;
+  }
+  .orderedList {
+    width: 390px;
+  }
+  .productName {
+    font-size: 20px;
+  }
+  .orderedTitle {
+    font-size: 26px;
+  }
+  .orderedName, .orderedPrice {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+    .productImage{
+      width: 300px;
+      height: 200px;
+    }
+    .orderListsContainer {
+        max-width: 100%;
+    }
+    .containersList {
+        margin-left: 50px;
+    }
+    .quantity {
+        margin: 0 50px;
+    }
+    .containersList {
+        margin-left: 25;
+    }
+}
+
+@media screen and (max-width: 945px) {
+    .containersList {
+        margin-left: 0;
+    }
+    .orderedList {
+        width: 450px;
+    }
+}
+@media screen and (max-width: 450px) {
+    .chooseBoxList {
+        width: 300px;
+    }
+    .orderedList {
+        width: 350px;
+    }
+    .delete{
+        width: 30px;
+        height: 40px;
+    }
+    .orderedName, .orderedPrice {
+        width: 280px;
+    }
+    .checkLabel {
+        font-size: 14px;
+    }
+    
+  }
+  @media screen and (max-width: 350px) {
+    .listItem {
+        padding: 0;
+    }
+    .addBox {
+        width: 260px;
+    }
+    .orderedList {
+        width: 280px;
+    }
+    .orderedName, .orderedPrice {
+        font-size: 18px;
+        width: 100%;
+        max-width: 240px;
+    }
+    
+  }
+

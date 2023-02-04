@@ -20,7 +20,7 @@ export default function ProductListItem ({products}) {
                                 <p className={styles.infoDetail} dangerouslySetInnerHTML={{__html: item.description}}></p>
                                 <div className={styles.bottomBlock}>
                                     <div className={styles.priceBlock}>
-                                        <p className={styles.price}>{item.price}</p>
+                                        <p className={styles.price}>{item.price?.toFixed(2)}</p>
                                         <img className={styles.priceCurrency} src={uah} alt="Грн."/>
                                     </div>
                                     <Link to={PRODUCT + '/' + item.id} className={styles.detailLink}>Купити зараз</Link>

@@ -1,7 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { commonProductService } from "../../../services/common-services/product-service";
+import { commonCategoryService } from "../../../services/common-services/category-service";
 
 const error = "Помилка з'єднання з сервером"
+
+export const getBoxCategory = createAsyncThunk(
+    'commonProducts/getBoxCategory',
+    async(_, {rejectValue}) => {
+        try {
+            const response = await commonCategoryService.getBoxCategory()
+            if(response.error){
+                return rejectValue(response.error)
+            }
+            return response.result
+        } catch (e) {
+            return rejectValue(error)
+        }
+    }
+)
 
 export const getProduct = createAsyncThunk(
     'commonProducts/getProduct',

@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   CallBack.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    patronymic: DataTypes.STRING,
     number: DataTypes.STRING,
     call: DataTypes.STRING,
     date: DataTypes.DATE

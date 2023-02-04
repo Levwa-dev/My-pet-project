@@ -8,9 +8,12 @@ class AuthController {
     async registration (req, res) {
         try {
             const {email, password} = req.body
-            const user = await User.findOne({where:{email}})
+            if(!email || !password) {
+                return res.status(500).json({error:"Відстуні пароль, або пошта"})
+            }
+            const user = await User.findOne({where:{id:1}})
             if(user){
-                return res.status(500).json({error:'Такий користувач вже інсує'})
+                return res.status(500).json({error:'Головний запис адміністратора вже доданий'})
             }
             const hashPassword = bcrypt.hashSync(password, 10)
             const newUser = await User.create({...req.body, password:hashPassword, isAdmin:true})

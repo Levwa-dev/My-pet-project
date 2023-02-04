@@ -6,7 +6,7 @@ module.exports = {
       return Promise.all([
         queryInterface.addColumn('in_box', 'price',
         {
-          type: Sequelize.INTEGER
+          type: Sequelize.FLOAT(10,2)
         },
         {
           transaction: t

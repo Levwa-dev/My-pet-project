@@ -17,15 +17,16 @@ module.exports = (sequelize, DataTypes) => {
   OrderInfo.init({
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    patronymic: DataTypes.STRING,
     telephone: DataTypes.STRING,
     street: DataTypes.STRING,
     building: DataTypes.STRING,
     sector: DataTypes.INTEGER,
     payment: DataTypes.STRING,
     orderNumber: DataTypes.STRING,
-    totalPrice: DataTypes.INTEGER,
+    totalPrice: DataTypes.FLOAT,
     comment: DataTypes.TEXT,
+    time: DataTypes.STRING,
+    deliveryDate: DataTypes.STRING,
     date: DataTypes.DATE
   }, {
     sequelize,

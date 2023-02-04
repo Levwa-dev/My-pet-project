@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getProduct, getProductList } from '../common-actions/products-action'
+import { getProduct, getProductList, getBoxCategory } from '../common-actions/products-action'
 
 const initialState = {
     product:'',
@@ -7,7 +7,8 @@ const initialState = {
     error:'',
     loading:false,
     pages:null,
-    currentCategory:{ name:'Морозиво' }
+    currentCategory:{ name:'Морозиво' },
+    boxCategory:null
 }
 
 export const commonProductsSlice = createSlice({
@@ -52,6 +53,24 @@ export const commonProductsSlice = createSlice({
             state.loading = true
         })
         builder.addCase(getProductList.rejected, (state, action)=>{
+            action.payload ?
+                state.error = action.payload
+                :
+                state.error = action.error.message
+            state.loading = false
+        })
+        
+        // Отримання категорії контейнерів
+        builder.addCase(getBoxCategory.fulfilled, (state, action)=>{
+            state.boxCategory = action.payload
+            state.error = ''
+            state.loading = false
+        })
+        builder.addCase(getBoxCategory.pending, (state, action) =>{
+            state.error = ''
+            state.loading = true
+        })
+        builder.addCase(getBoxCategory.rejected, (state, action)=>{
             action.payload ?
                 state.error = action.payload
                 :

@@ -12,24 +12,28 @@ import LoadingComponent from '../loading/Loading'
 
 export default function ProductList () {
     const [page, setPage] = useState(1)
-    const {productList, pages, error, loading, currentCategory} = useSelector(state=>state.commonProducts)
+    const {productList, pages, error, loading, currentCategory, boxCategory} = useSelector(state=>state.commonProducts)
     const dispatch = useDispatch()
     const {category} = useParams()
 
     useEffect(()=>{
-        dispatch(getProductList({page, category, productList}))
-        return () => dispatch(resetProductList())
-    },[])
-
-    useEffect(()=>{
-        if(currentCategory !== productList[0]?.category){
-            dispatch(setCurrentCategory({name:productList[0]?.category}))
+        return ()=>{
+            if(currentCategory.name !== boxCategory?.name || currentCategory){
+                dispatch(setCurrentCategory({name:currentCategory.name || {name:"Морозиво"}}))
+            }
+            dispatch(resetProductList())
         }
-    },[productList])
+    },[])
 
     useEffect(()=>{
         dispatch(getProductList({page, category, productList}))
     },[page])
+
+    useEffect(()=>{
+        if(currentCategory.name !== productList[0]?.category){
+            dispatch(setCurrentCategory({name:productList[0]?.category}))
+        }
+    },[productList])
 
     const loadMoreProducts = (e) => {
         if(page < pages) {

@@ -1,0 +1,191 @@
+.mainBody {
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+}
+.title {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: 1.5px;
+    margin: 120px 0;
+}
+.formBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 600px;
+}
+.formBody > input {
+    width: 500px;
+    height: 60px;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 40px;;
+    letter-spacing: 1.5px;
+    color: #000000;
+    margin-bottom: 80px;
+    border: 1px solid #000;
+    text-align: center;
+    padding: 0px 10px;
+}
+#date, #time {
+    text-align: center;  
+}
+.formBody > textarea {
+    min-width: 500px;
+    max-width: 500px;
+    min-height: 200px;
+    max-height: 200px;
+    height: 200px;
+    overflow-y: scroll;
+    font-size: 36px;
+    letter-spacing: 1.5px;
+    margin-top: 80px;
+    margin-bottom: 60px;
+    border: 1px solid #000;
+}
+.formBody > textarea::placeholder {
+    color: #000000;
+    text-align: center;
+    line-height: 200px;
+}
+.labels {
+    margin-bottom: 10px;
+    font-size: 36px;
+    letter-spacing: 1.5px;
+}
+.wotkTime {
+    font-size: 26px;
+}
+.orderBtn {
+    width: 225px;
+    height: 80px;
+    background: #FA95EA;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 30px;
+    letter-spacing: 1.5px;
+    color: #FFFFFF;
+    border: none;
+    margin-bottom: 60px;
+    transition: 1.5s;
+    cursor: pointer;
+}
+.orderBtn:hover {
+    background-color: #ff3ade;
+    color: #f3fa95;
+}
+.paymentContainer {
+    width: 500px;
+}
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 22px;
+    text-align: justify;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #FBDCFC;
+    border-radius: 50%;
+  }
+  .container:hover input ~ .checkmark {
+    background-color: #F176F3;
+  }
+  .container input:checked ~ .checkmark {
+    background-color: #F176F3;
+  }
+
+@media screen and (max-width: 1610px) {
+    .title {
+      font-size: 26px;
+      margin: 60px 0;
+    }
+    .formBody > input {
+        font-size: 24px;
+        height: 40px;
+        margin-bottom: 40px;
+    }
+    .formBody > textarea {
+        font-size: 24px;
+        margin: 40px 0;
+    }
+    .labels {
+        font-size: 24px;
+    }
+    .wotkTime {
+        font-size: 16px;
+    }
+    .orderBtn {
+        height: 60px;
+    }
+  }
+
+@media screen and (max-width: 550px) {
+    .title {
+      font-size: 22px;
+    }
+    .formBody > input {
+        font-size: 20px;
+        width: 300px;
+    }
+    .formBody > textarea {
+        font-size: 20px;
+        min-width: 300px;
+        max-width: 300px;
+    }
+    .paymentContainer {
+        width: 300px;
+    }
+    .labels {
+        font-size: 20px;
+    }
+    .workTime {
+        font-size: 14px;
+    }
+  }
+  @media screen and (max-width: 325px) {
+    .title {
+      font-size: 22px;
+    }
+    .formBody > input {
+        font-size: 20px;
+        width: 280px;
+    }
+    .formBody > textarea {
+        font-size: 20px;
+        min-width: 280px;
+        max-width: 280px;
+    }
+    .paymentContainer {
+        width: 280px;
+    }
+    .labels {
+        font-size: 20px;
+    }
+    .workTime {
+        font-size: 14px;
+    }
+  }

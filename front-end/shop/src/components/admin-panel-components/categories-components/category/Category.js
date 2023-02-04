@@ -28,6 +28,10 @@ export default function AdminCategory () {
                 <div className='admin__detail-name'>Назва</div>
                 <div className='admin__detail-value'>{category.name}</div>
             </div>
+            <div className='admin__detail-content'>
+                <div className='admin__detail-name'>Категорія продукту</div>
+                <div className='admin__detail-value'>{category.product ? "Так" : "Ні"}</div>
+            </div>
         </DetailBody>
     )
 }

@@ -54,11 +54,6 @@ export default function Order () {
             </div>
 
             <div className='admin__detail-content'>
-                <div className='admin__detail-name'>По батькові</div>
-                <div className='admin__detail-value'>{order.patronymic}</div>
-            </div>
-
-            <div className='admin__detail-content'>
                 <div className='admin__detail-name'>Номер замовлення</div>
                 <div className='admin__detail-value'>{order.orderNumber}</div>
             </div>
@@ -91,6 +86,16 @@ export default function Order () {
             <div className='admin__detail-content'>
                 <div className='admin__detail-name'>Ціна замовлення</div>
                 <div className='admin__detail-value'>{order.totalPrice}</div>
+            </div>
+
+            <div className='admin__detail-content'>
+                <div className='admin__detail-name'>Дата доставки</div>
+                <div className='admin__detail-value'>{order.deliveryDate}</div>
+            </div>
+
+            <div className='admin__detail-content'>
+                <div className='admin__detail-name'>Час доставки</div>
+                <div className='admin__detail-value'>{order.time}</div>
             </div>
 
             <div className='admin__detail-content'>
