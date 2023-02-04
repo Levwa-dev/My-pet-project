@@ -53,21 +53,6 @@ module.exports = {
       },
     });
 
-    await queryInterface.createTable('videos', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      description: {
-        type: Sequelize.TEXT
-      },
-      video: {
-        type: Sequelize.STRING(500)
-      }
-    });
-
     await queryInterface.createTable('call_back', {
       id: {
         allowNull: false,
@@ -79,9 +64,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       lastName: {
-        type: Sequelize.STRING
-      },
-      patronymic: {
         type: Sequelize.STRING
       },
       number: {
@@ -105,6 +87,10 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING
+      },
+      product: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       }
     });
 
@@ -133,10 +119,10 @@ module.exports = {
         defaultValue: false
       },
       oldPrice : {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT(10,2)
       },
       price: {
-        type: Sequelize.FLOAT
+        type: Sequelize.FLOAT(10,2)
       },
       date: {
         type: Sequelize.DATE,
@@ -197,9 +183,6 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
-      patronymic: {
-        type: Sequelize.STRING
-      },
       telephone: {
         type: Sequelize.STRING
       },
@@ -219,10 +202,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       totalPrice: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT
       },
       comment: {
         type: Sequelize.TEXT
+      },
+      time: {
+        type: Sequelize.STRING
+      },
+      deliveryDate: {
+        type: Sequelize.STRING
       },
       date: {
         type: Sequelize.DATE,
@@ -244,7 +233,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.FLOAT(10,2)
       },
       orderInfoId: {
         allowNull:false,

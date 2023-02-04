@@ -1,26 +1,24 @@
 const {Category} = require('../../sequelize/models')
 const PaginationServies = require('../services/pagination-service')
-const { Op } = require('sequelize')
 
 const FilesService = require('../services/files-service')
 
 class CategoryController {
-
-    async addCategory(req, res) {
+    async addCategory (req, res) {
         try {
-            const {name} = req.body
+            const {name, product} = req.body
             const category = await Category.findOne({where:{name}})
             if(category){
                 return res.status(500).json({error:'Така категорія вже в системі'})
             }
-            await Category.create({name})
+            await Category.create({name, product})
             res.json({result:true})
         } catch (e) {
             return res.status(500).json({error:'Помилка при збереженні'})
         }
     }
 
-    async showCategoryList(req, res) {
+    async showCategoryList (req, res) {
         try {
             const query = { ...req.query }
             const categoryCount = await Category.findAndCountAll({where:query})
@@ -76,6 +74,19 @@ class CategoryController {
         } catch (e) {
             res.status(500).json({error:'Помилка видалення даних'})
         }
+    }
+
+    async showBoxCategory (req, res) {
+        try {
+            const category = await Category.findOne({where:{product:false}})
+            if(!category) {
+                throw new Error()
+            }
+            res.json({result:category})
+        } catch (e) {
+            res.status(500).json({error:"Помилка з'єднання з сервером"})
+        }
+        
     }
 }
 module.exports = new CategoryController()

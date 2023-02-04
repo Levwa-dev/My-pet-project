@@ -17,6 +17,8 @@ import NotFoundPage from './pages/common-pages/404-page'
 import MainPage from './pages/common-pages/Main-page'
 import ProductPage from './pages/common-pages/Product-page'
 import ProductListPage from './pages/common-pages/Product-list-page'
+import Cart from "./pages/common-pages/Cart-page"
+import CartDeliverPage from './pages/common-pages/Cart-deliver-page'
 
 
 
@@ -78,6 +80,14 @@ export const commonRoutes = [
     {
         path: Routes.PRODUCT_LIST + '/:category',
         component: <ProductListPage/>
+    },
+    {
+        path:Routes.CART,
+        component: <Cart/>
+    },
+    {
+        path:Routes.CART_DELIVER,
+        component: <CartDeliverPage/>
     }
    
 ]

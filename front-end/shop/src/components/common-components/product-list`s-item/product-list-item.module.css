@@ -147,7 +147,7 @@
     }
 }
 
-@media screen and (max-width: 835px) {
+@media screen and (max-width: 900px) {
     .item {
         flex-direction: column;
         justify-content: center;

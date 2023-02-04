@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Category.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    product: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Category',

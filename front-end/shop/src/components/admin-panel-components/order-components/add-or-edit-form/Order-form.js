@@ -115,9 +115,6 @@ export default function OrderForm ({children, sendData, defaultData, currentData
             <label id="admin__lastName" className="admin__label">Прізвище</label>
             <input defaultValue={currentData.lastName} id="admin__lastName" onChange={saveData('lastName')} className="admin__input"/>
 
-            <label id="admin__patronymic" className="admin__label">По батькові</label>
-            <input defaultValue={currentData.patronymic} id="admin__patronymic" onChange={saveData('patronymic')} className="admin__input"/>
-
             <label id="admin__telephone" className="admin__label">Телефон</label>
             <input defaultValue={currentData.telephone} id="admin__telephone" onChange={saveData('telephone')} className="admin__input"/>
 
@@ -132,6 +129,12 @@ export default function OrderForm ({children, sendData, defaultData, currentData
 
             <label id="admin__payment" className="admin__label">Сплата</label>
             <input defaultValue={currentData.payment || data.payment} id="admin__payment" onChange={saveData('payment')} className="admin__input"/>
+
+            <label className="admin__label" htmlFor="admin__deliveryDate">Дата доставки</label>
+            <input type="date" id="admin__deliveryDate" defaultValue={currentData.deliveryDate} onChange={saveData('deliveryDate')}/>
+
+            <label className="admin__label" htmlFor="admin__time">Час доставки</label>
+            <input type="time" defaultValue={currentData.time} onChange={saveData('time')} id='admin__time' min='09:00' max='19:00'/>
 
             <label id="admin__comment" className="admin__label">Коментар</label>
             <input defaultValue={currentData.comment} id="admin__comment" onChange={saveData('comment')} className="admin__input"/>
