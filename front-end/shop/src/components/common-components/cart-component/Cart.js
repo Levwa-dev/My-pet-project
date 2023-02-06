@@ -212,7 +212,7 @@ export default function Cart() {
                                             if(product.categoryId !== boxCategory?.id){
                                                 return(
                                                     <label  key={product.id} className={styles.checkLabel}>
-                                                        <input value={product.id} checked={orderData?.chooseBox[index]?.productId === product.id} onChange={selectBox(product, index)} type="radio"/>
+                                                        <input role="checkmark" value={product.id} checked={orderData?.chooseBox[index]?.productId === product.id} onChange={selectBox(product, index)} type="radio"/>
                                                         {product.name}
                                                         <span className={styles.checkmark}></span>
                                                     </label>

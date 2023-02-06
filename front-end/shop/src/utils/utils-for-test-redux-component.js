@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom"
 // As a basic setup, import your same slice reducers
 import { commonProductsSlice } from "../store/common/common-reducers/products-reducer"
+import { cartSlice } from "../store/common/common-reducers/cart-reducer";
 
 export function renderWithProviders(
   ui,
@@ -12,7 +13,10 @@ export function renderWithProviders(
     preloadedState = {},
     // Automatically create a store instance if no store was passed in
     store = configureStore({
-      reducer: { commonProducts: commonProductsSlice.reducer },
+      reducer: { 
+        commonProducts: commonProductsSlice.reducer,
+        cart: cartSlice.reducer
+      },
       preloadedState,
     }),
     ...renderOptions

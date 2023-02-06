@@ -4,7 +4,7 @@ import Thanks from "../thanks-component/Thanks";
 
 import { resetCart } from "../../../../store/common/common-reducers/cart-reducer";
 import { useDispatch} from "react-redux"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { cartService } from "../../../../services/common-services/cart-service";
 import { validatorService } from "../../../../services/validator-services";
@@ -30,7 +30,7 @@ export default function Deliver () {
         e.preventDefault()
         try {
             const validationSucces = validatorService.validateDeliveringForm("delivering-form")
-            if(validationSucces){
+            if(validationSucces && order.hasOwnProperty('orderedProducts')){
                 const content = {
                     orderInfo,
                     orderedProducts: order.orderedProducts,
@@ -60,18 +60,20 @@ export default function Deliver () {
 
     useEffect(()=>{
         const order = JSON.parse(localStorage.getItem('order'))
-        if(!order){
+        if(!order) {
            navigate(MAIN) 
         }
-        order.chooseBox = order.chooseBox.filter(item=>item.productId !== 0)
-                          .map(item=>{
-                                delete item.id
-                                return item
-                            })
-        const currentDate = cartService.getDateForInput()
-        setOrder(order)
-        setDate({currentDate, minDate:currentDate})
-        setOrderInfo({...orderInfo, deliveryDate:currentDate})
+        else {
+            order.chooseBox = order.chooseBox.filter(item=>item.productId !== 0)
+                            .map(item=>{
+                                    delete item.id
+                                    return item
+                                })
+            const currentDate = cartService.getDateForInput()
+            setOrder(order)
+            setDate({currentDate, minDate:currentDate})
+            setOrderInfo({...orderInfo, deliveryDate:currentDate})
+        }
     },[])
 
     if(ordered) {
@@ -79,52 +81,51 @@ export default function Deliver () {
            <Thanks/>
         )
     }
-
     return (
         <main className={styles.mainBody}>
             <div className="wrapper">
                 <h1 className={styles.title}>Дані для доставки</h1>
-                <form className={styles.formBody} name="delivering-form">
-                <label className={styles.labels} htmlFor={styles.name}>Ім'я</label>
-                    <input type="text" id={styles.name} onChange={saveOrderInfo('firstName')}/>
+                <form className={styles.formBody} role="form" name="delivering-form">
+                    <label className={styles.labels} htmlFor={styles.name}>Ім'я</label>
+                    <input role="firstName" type="text" id={styles.name} onChange={saveOrderInfo('firstName')}/>
 
                     <label className={styles.labels} htmlFor={styles.lastName}>Прізвище</label>
-                    <input type="text" id={styles.lastName} onChange={saveOrderInfo('lastName')}/>
+                    <input role="lastName" type="text" id={styles.lastName} onChange={saveOrderInfo('lastName')}/>
 
                     <label className={styles.labels}  htmlFor={styles.street}>Вулиця</label>
-                    <input type="text" id={styles.street} onChange={saveOrderInfo('street')}/>
+                    <input role="street" type="text" id={styles.street} onChange={saveOrderInfo('street')}/>
 
                     <label className={styles.labels} htmlFor={styles.building}>Будинок</label>
-                    <input type="text" id={styles.building} onChange={saveOrderInfo('building')}/>
+                    <input role="building" type="text" id={styles.building} onChange={saveOrderInfo('building')}/>
 
                     <label className={styles.labels} htmlFor={styles.sector}>Під'їзд</label>
-                    <input type="text" value={orderInfo.sector} id={styles.sector} onChange={saveOrderInfo('sector')}/>
+                    <input role="sector" type="text" value={orderInfo.sector} id={styles.sector} onChange={saveOrderInfo('sector')}/>
 
                     <label className={styles.labels} htmlFor={styles.telephone}>Номер телефону</label>
-                    <input type="tel" style={{letterSpacing:"5px"}} id={styles.telephone} value={orderInfo.telephone} placeholder="380 50 505 0505" onChange={saveOrderInfo('telephone')}/>
+                    <input role="telephone" type="tel" style={{letterSpacing:"5px"}} id={styles.telephone} value={orderInfo.telephone} placeholder="380 50 505 0505" onChange={saveOrderInfo('telephone')}/>
 
                     <label className={styles.labels} htmlFor={styles.date}>Дата доставки</label>
-                    <input type="date" id={styles.date} value={date.currentDate} onChange={chooseDate} min={date.minDate}/>
+                    <input role="date" type="date" id={styles.date} value={date.currentDate} onChange={chooseDate} min={date.minDate}/>
 
                     <label className={styles.labels} htmlFor={styles.time}>Час доставки</label>
                     <span className={styles.workTime}>Ми працюємо з 09:00 до 19:00</span>
-                    <input type="time" onChange={saveOrderInfo('time')} id={styles.time} min='09:00' max='19:00'/>
+                    <input role="time" type="time" onChange={saveOrderInfo('time')} id={styles.time} min='09:00' max='19:00'/>
 
                     <p className={styles.labels}>Спосіб сплати</p>
                     <div className={styles.paymentContainer}>
                         <label className={styles.container}>
-                            <input defaultChecked  onChange={saveOrderInfo('payment')} value="Готівка" type="radio" name="payment"/>
+                            <input role="cash" defaultChecked  onChange={saveOrderInfo('payment')} value="Готівка" type="radio" name="payment"/>
                             Готівкою
                             <span className={styles.checkmark}></span>
                         </label>
                         <label className={styles.container}>
-                            <input onChange={saveOrderInfo('payment')} value="Картка" type="radio" name="payment"/>
+                            <input role="card" onChange={saveOrderInfo('payment')} value="Картка" type="radio" name="payment"/>
                             Карткою кур'єру
                             <span className={styles.checkmark}></span>
                         </label>
                     </div>
 
-                    <textarea onChange={saveOrderInfo('comment')} placeholder="Додати коментар"></textarea>
+                    <textarea role="comment" onChange={saveOrderInfo('comment')} placeholder="Додати коментар"></textarea>
 
                     <button onClick={submit} className={styles.orderBtn}>Замовити</button>
                 </form>
