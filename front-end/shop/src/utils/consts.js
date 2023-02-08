@@ -11,6 +11,10 @@ export const ADMIN_ADD_PRODUCT = '/admin/product/add'
 export const ADMIN_ORDERS = '/admin/orders'
 export const ADMIN_ORDER = '/admin/order'
 export const ADMIN_ORDER_ADD = '/admin/order/add'
+// шляхи для взаємодії з обліковими записами адміністраторів
+export const ADMIN_USERS = '/admin/users'
+export const ADMIN_USER = '/admin/user'
+export const ADMIN_ADD_USER = '/admin/user/add'
 
 
 // шляхи основної частини сайту

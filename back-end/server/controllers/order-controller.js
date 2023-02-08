@@ -48,7 +48,7 @@ class OrderController {
 
     async showOrderList (req, res) {
         try {
-            const {orderedBy = 'DESC'} = req.query
+            const {orderedBy = 'ASC'} = req.query
             const params = req.query
             if(params){
                 delete params.orderedBy

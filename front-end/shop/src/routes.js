@@ -12,6 +12,10 @@ import AdminOrdersPage from './pages/admin-pages/Admin-orders-page'
 import AdminOrderPage from './pages/admin-pages/Admin-order-page'
 import AdminOrderAddPage from './pages/admin-pages/Admin-order-add-page'
 
+import AdminUserListPage from './pages/admin-pages/Admin-user-list-page'
+import AdminUserPage from './pages/admin-pages/Admin-user-page'
+import AdminUserAddPage from './pages/admin-pages/Admin-user-add-page'
+
 import LoginPage from './pages/common-pages/Login-page'
 import NotFoundPage from './pages/common-pages/404-page'
 import MainPage from './pages/common-pages/Main-page'
@@ -19,6 +23,9 @@ import ProductPage from './pages/common-pages/Product-page'
 import ProductListPage from './pages/common-pages/Product-list-page'
 import Cart from "./pages/common-pages/Cart-page"
 import CartDeliverPage from './pages/common-pages/Cart-deliver-page'
+
+
+
 
 
 
@@ -60,6 +67,18 @@ export const adminRoutes = [
     {
         path: Routes.ADMIN_ORDER_ADD,
         component: <AdminOrderAddPage/>
+    },
+    {
+        path: Routes.ADMIN_USERS + '/:page',
+        component: <AdminUserListPage/> 
+    },
+    {
+        path: Routes.ADMIN_USER + '/:id',
+        component: <AdminUserPage/>
+    },
+    {
+        path: Routes.ADMIN_ADD_USER,
+        component: <AdminUserAddPage/>
     }
 
 ]
