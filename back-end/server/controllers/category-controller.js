@@ -61,7 +61,6 @@ class CategoryController {
             const {id} = req.params
             const category = await Category.findOne({where:{id}})
             const products = await category.getProducts()
-            
             for(let product of products) {                  // Видалення всіх дочерніх фото
                 const productPictures = await product.getProductPictures()
                 for(let photo of productPictures){

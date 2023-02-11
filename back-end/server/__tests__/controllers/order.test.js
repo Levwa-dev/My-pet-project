@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../../../sequelize/config/config.json')
 const orderController = require("../../../server/controllers/order-controller")
+const {InBox, OrderInfo, OrderProduct, Product, Category} = require('../../../sequelize/models')
 
 const mockResponse = () => {
     res = {}
@@ -13,12 +14,69 @@ const mockResponse = () => {
 describe("The order controller testing", ()=>{
     beforeAll(async () => {
         mockedSequelize = new Sequelize(db.test);
-        await mockedSequelize.sync();
+        await OrderInfo.bulkCreate([
+            {   id:1,
+                firstName:'Jake',
+                lastName:'Salivan',
+                telephone:'+380671892190',
+                street:'qwes',
+                building:'dwa',
+                sector:2,
+                payment:'Готівка',
+                orderNumber:'1234456777700',
+                totalPrice: 123,
+                comment:'asdwadsdwadsdwa',
+                date: new Date()
+            }
+        ])
+        await OrderProduct.bulkCreate([
+            {   
+                id:1,
+                productId: 1,
+                name: 'DataTypes.STRING',
+                price: 123,
+                orderInfoId: 1
+            }
+        ])
+        await InBox.bulkCreate([
+            {
+                id:1,
+                boxName: 'DataTypes.STRING',
+                boxId: 1,
+                productName: 'DataTypes.STRING',
+                productId: 2,
+                orderInfoId:1
+            }
+        ])
+        await Category.bulkCreate([
+            {
+                id:1,
+                name: 'Морозиво',
+                product: true
+            }
+        ])
+        await Product.bulkCreate([
+            {
+                id:1,
+                name: 'Ice',
+                description: 'DataTypes.TEXT',
+                picture: 'first.jpeg',
+                oldPrice: null,
+                rating: 0,
+                bestOffer: false,
+                price: 12,
+                date: new Date(),
+                sale: false,
+                avaliable: true,
+                categoryId: 1
+              }
+        ])
     })
 
     afterAll(async () => {
+        await OrderInfo.destroy({truncate: {cascade: true}})
+        await Category.destroy({truncate: {cascade: true}})
         jest.clearAllMocks();
-        await mockedSequelize.close();
     })
 
     describe("Make an order", ()=>{
@@ -30,29 +88,26 @@ describe("The order controller testing", ()=>{
                         {   
                             productId: 3,
                             name: 'DataTypes.STRING',
-                            quantity: 2,
-                            price: 123,
+                            price: 122
                         }
                     ],
-                    chossedBox: [
+                    choosedBox: [
                         {
                             boxName: 'DataTypes.STRING',
                             boxId: 1,
                             productName: 'DataTypes.STRING',
                             productId: 3,
+                            price: 1
                         }
                     ],
                     orderInfo:  {
                         firstName:'Jake',
                         lastName:'Salivan',
-                        patronymic:'Jackovich',
                         telephone:'+380671892190',
                         street:'qwes',
                         building:'dwa',
                         sector:2,
                         payment:'Готівка',
-                        orderNumber: '12133451',
-                        totalPrice: 123,
                         comment:'asdwadsdwadsdwa',
                         date: new Date()
                       }
@@ -72,7 +127,6 @@ describe("The order controller testing", ()=>{
                     orderInfo:  {
                         firstName:'Jake',
                         lastName:'Salivan',
-                        patronymic:'Jackovich',
                         telephone:'+380671892190',
                         street:'qwes',
                         building:'dwa',
@@ -96,7 +150,6 @@ describe("The order controller testing", ()=>{
                     orderInfo:  {
                         firstName:'Jake',
                         lastName:'Salivan',
-                        patronymic:'Jackovich',
                         telephone:'+380671892190',
                         street:'qwes',
                         building:'dwa',
@@ -147,7 +200,7 @@ describe("The order controller testing", ()=>{
                     page:1
                 },
                 query:{
-                    orderedBy: 'ASC'
+                    orderedBy: 'DESC'
                 }
             }
             const res = mockResponse()
@@ -157,7 +210,19 @@ describe("The order controller testing", ()=>{
             )
         })
 
-        test("An error occurred while fetching data", async()=>{
+        test("Such data is not exist", async()=>{
+            const req = {
+                params: {
+                    page:4
+                },
+                query:{}
+            }
+            const res = mockResponse()
+            await orderController.showOrderList(req, res)
+            expect(res.status).toHaveBeenCalledWith(404)
+        })
+
+        test("An error was occurred while fetching", async()=>{
             const req = {
                 params: {
                     page:4
@@ -174,23 +239,23 @@ describe("The order controller testing", ()=>{
             const req = {
                 params: {id:2},
                 body:{
-                    products: [
+                    orderedProducts: [
                         {id:2, delete:true},
                         {
                             delete:false,   
                             productId: 3,
                             name: 'DataTyp',
-                            quantity: 2,
                             price: 123
                         }
                     ],
-                    boxes: [
+                    choosedBox: [
                         {id:2, delete:true},
                         {
                             boxName: 'DataTypes.STRING',
                             boxId: 1,
                             productName: 'DataTypes.STRING',
                             productId: 3,
+                            price: 123
                         }
 
                     ],
@@ -206,9 +271,9 @@ describe("The order controller testing", ()=>{
             )
         })
 
-        test("Update order without an error", async()=>{
+        test("An error was occurred while updating", async()=>{
             const req = {
-                params: {id:5},
+                params: {},
                 body:{}
             }
             const res = mockResponse()
@@ -240,6 +305,31 @@ describe("The order controller testing", ()=>{
 
     })
 
+    describe("Find a product", ()=>{
+        test("Find a product without an error", async()=>{
+            const req = {
+                query: {name:"Ice"}
+            }
+            const res = mockResponse()
+            await orderController.findProduct(req, res)
+            expect(res.json).toHaveBeenCalledWith(
+                expect.objectContaining({result:expect.anything()})
+            )
+        })
+        test("Such data is not exist", async()=>{
+            const req = {
+                query: { name:'QWERR'}
+            }
+            const res = mockResponse()
+            await orderController.findProduct(req, res)
+            expect(res.status).toHaveBeenCalledWith(404)
+        })
+        test("An error occurred while fetching data", async()=>{
+            const req = {}
+            const res = mockResponse()
+            await orderController.findProduct(req, res)
+            expect(res.status).toHaveBeenCalledWith(500)
+        })
+    })
 
-    
 })

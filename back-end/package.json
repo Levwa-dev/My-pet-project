@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "cd server && nodemon server.js",
-    "test": " npm run drop:test && npm run create:test && jest --coverage",
+    "test": " npm run drop:test && npm run create:test && npm run migrateTest && jest --coverage --detectOpenHandles",
     "createDb": "cd sequelize && npx sequelize-cli db:create",
     "migrate": "cd sequelize && npx sequelize-cli db:migrate",
+    "migrateTest": "cd sequelize && cross-env NODE_ENV=test npx sequelize-cli db:migrate",
     "createSeed": "cd sequelize && npx sequelize-cli seed:generate --name",
-    "create:test": "cd sequelize && cross-env NODE_ENV=test npx sequelize-cli db:create && cross-env NODE_ENV=test npx sequelize-cli db:migrate  && cross-env NODE_ENV=test npx sequelize-cli db:seed --seed 20221118144335-orderInfo.js && cross-env NODE_ENV=test npx sequelize-cli db:seed:all",
+    "create:test": "cd sequelize && cross-env NODE_ENV=test npx sequelize-cli db:create",
     "drop:test": "cd sequelize && cross-env NODE_ENV=test npx sequelize-cli db:drop"
   },
   "author": "Dmitriev Valeriy",

@@ -4,7 +4,7 @@ import style from "./header.module.css"
 import { useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
-import { MAIN, CART } from "../../../../../utils/consts";
+import { MAIN, CART, CALLBACK } from "../../../../../utils/consts";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBasketShopping } from '@fortawesome/free-solid-svg-icons'
@@ -22,7 +22,7 @@ export default function Header () {
                         <nav className={style.navigation}>
                             <ul className={style.navigationList} >
                                 <li><Link to={MAIN}>Головна</Link></li>
-                                <li><Link to={'#'}>Написати нам</Link></li>
+                                <li><Link to={CALLBACK}>Написати нам</Link></li>
                             </ul>
                             <div className={style.cartContent}>
                                 <Link to={CART} className={style.cart}>

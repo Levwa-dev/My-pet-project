@@ -64,6 +64,18 @@ export const validatorService = {
             }
         }
         return valid
+    },
+    validateCallBackForm (formName) {
+        const inputs = document.forms[formName].getElementsByTagName("input")
+        let valid = true
+        for(let input of inputs) {
+            if(input.value === '') {
+                input.setCustomValidity("Обов'язкове поле")
+                input.reportValidity()
+                valid = false
+            }
+        }
+        return valid
     }
     
 }

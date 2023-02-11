@@ -76,7 +76,6 @@ class UserController {
             await User.update({...req.body}, {where:{id}})
             res.json({result:true})
         } catch (e) {
-            console.log(e.message)
             res.status(500).json({error:"При редагуванні даних виникла помилка"})
         }
        

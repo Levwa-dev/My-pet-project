@@ -15,6 +15,9 @@ export const ADMIN_ORDER_ADD = '/admin/order/add'
 export const ADMIN_USERS = '/admin/users'
 export const ADMIN_USER = '/admin/user'
 export const ADMIN_ADD_USER = '/admin/user/add'
+// шляхи для взаємодії з заявками для уточнення інформації
+export const ADMIN_CALLBACKS = '/admin/callbacks'
+export const ADMIN_CALLBACK = '/admin/callback'
 
 
 // шляхи основної частини сайту
@@ -23,3 +26,4 @@ export const PRODUCT = '/product'
 export const PRODUCT_LIST = '/product/list/category'
 export const CART = '/cart'
 export const CART_DELIVER = '/cart/deliver'
+export const CALLBACK = '/callback'
