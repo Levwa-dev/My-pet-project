@@ -22,7 +22,8 @@ class FilesService {
     }
 
     mockUploadPhotos (file, dir, subDir) {
-        const imagesForTestingPath = path.resolve(__dirname, '..', "__tests__", 'images-for-testing', file)
+        const fileInDir = file.replace(/\d/g, '')
+        const imagesForTestingPath = path.resolve(__dirname, '..', "__tests__", 'images-for-testing', fileInDir)
         const pathToProductPhoto = !subDir ? 
             path.resolve(__dirname, '..', 'public', dir, file)
                 :

@@ -1,0 +1,30 @@
+.title {
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.title > div, .dataItem{
+    width: 150px;
+    height: 20px;
+    text-align: center;
+    background-color: rgb(237, 237, 237);
+    border: 1px solid #000;
+}
+.dataItem {
+    border: 1px dashed #000;
+}
+.link {
+    color: #000;
+    text-decoration: none;
+}
+.data {
+    display: flex;
+    justify-content: center;
+}
+.liItem {
+    font-size: 18px;
+    list-style: none;
+    margin: 10px 0;
+}

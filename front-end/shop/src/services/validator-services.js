@@ -5,8 +5,11 @@ export const validatorService = {
     },
 
     validatePassword (password) {
-        const regex = /[0-9a-zA-Z]{6,}/
-        return  regex.test(password)
+        const regex = /[а-яА-Я]/g
+        if(!regex.test(password) && password.length >= 6){
+            return true
+        }
+        return false
     },
 
     setLocaleTime (time) {
@@ -58,6 +61,18 @@ export const validatorService = {
                     input.reportValidity()
                     valid = false
                 }
+            }
+        }
+        return valid
+    },
+    validateCallBackForm (formName) {
+        const inputs = document.forms[formName].getElementsByTagName("input")
+        let valid = true
+        for(let input of inputs) {
+            if(input.value === '') {
+                input.setCustomValidity("Обов'язкове поле")
+                input.reportValidity()
+                valid = false
             }
         }
         return valid

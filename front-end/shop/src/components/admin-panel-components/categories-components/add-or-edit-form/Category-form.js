@@ -10,7 +10,7 @@ export default function CategoryForm ({sendData, currentData = ''}) {
             <input  defaultValue={currentData.name} id="admin__category-name" onChange={(e)=>setData({name:e.target.value})} className="admin__input"/>
 
             <label id="admin__category-product" className="admin__label">Категорія продукту</label>
-            <select defaultValue={+currentData.product || 1} id="admin__category-product" className="admin__input" onChange={(e)=>setData({product:e.target.value})}>
+            <select defaultValue={String(+currentData.product) || '1'} id="admin__category-product" className="admin__input" onChange={(e)=>setData({product:e.target.value})}>
                 <option value={1}>Так</option>
                 <option value={0}>Ні</option>
             </select>

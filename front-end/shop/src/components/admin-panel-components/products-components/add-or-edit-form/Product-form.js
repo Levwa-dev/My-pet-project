@@ -85,13 +85,13 @@ export default function ProductForm ({children, defaultData, categories, sendDat
             <input onChange={saveData('picture')} id="photo" type='file' accept="image/*" className="admin__input"/>
            
             <label className="admin__label" htmlFor="avaliable">В продажі</label>
-            <select defaultValue={+currentData.avaliable || 1} onChange={saveData('avaliable')} className="admin__select" id="avaliable">
+            <select defaultValue={String(+currentData.avaliable) || '1'} onChange={saveData('avaliable')} className="admin__select" id="avaliable">
                 <option value={1}>Так</option>
                 <option value={0}>Ні</option>
             </select>
 
             <label className="admin__label" htmlFor="bestOffer">Найкраща пропозиція</label>
-            <select defaultValue={+currentData.bestOffer || 0} onChange={saveData('bestOffer')} className="admin__select" id="bestOffer">
+            <select defaultValue={String(+currentData.bestOffer) || '0'} onChange={saveData('bestOffer')} className="admin__select" id="bestOffer">
                 <option value={0}>Ні</option>
                 <option value={1}>Так</option>
             </select>

@@ -167,9 +167,6 @@
     }
   }
   @media screen and (max-width: 325px) {
-    .title {
-      font-size: 22px;
-    }
     .formBody > input {
         font-size: 20px;
         width: 280px;
@@ -181,11 +178,5 @@
     }
     .paymentContainer {
         width: 280px;
-    }
-    .labels {
-        font-size: 20px;
-    }
-    .workTime {
-        font-size: 14px;
     }
   }

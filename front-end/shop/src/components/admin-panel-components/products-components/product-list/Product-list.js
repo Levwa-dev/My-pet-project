@@ -6,7 +6,7 @@ import { validatorService } from "../../../../services/validator-services";
 import { useDispatch, useSelector } from "react-redux"
 import { adminFetchProducts, adminFetchProductsCategories } from "../../../../store/admin/admin-actions/product-actions"
 import { Link } from "react-router-dom"
-import style from "./product-list.module.css"
+import styles from "./product-list.module.css"
 
 export default function ProductList () {
     const searchFields = [
@@ -41,29 +41,29 @@ export default function ProductList () {
             {
                 state.productList &&
                 <>
-                    <div className={style.title}>
-                        <div id={style.titleId}>ID</div>
+                    <div className={styles.title}>
+                        <div id={styles.titleId}>ID</div>
                         <div>Назва</div>
                         <div>Ціна</div>
-                        <div id={style.titleSale}>Знижка</div>
-                        <div id={style.titleAvaliable}>В продажі</div>
+                        <div id={styles.titleSale}>Знижка</div>
+                        <div id={styles.titleAvaliable}>В продажі</div>
                         <div>Категорія</div>
                         <div>Додано</div>
                     </div>
-                    <ul className={style.list}>
+                    <ul className={styles.list}>
                         {
                             state.productList.map((item)=>{
                                 return (
-                                    <li className={style.item} key={item.id}>
+                                    <li className={styles.item} key={item.id}>
                                         <Link to={ADMIN_PRODUCT + '/' + item.id}>
-                                            <div className={style.data}>
-                                                <div className={style.titleItems} id={style.titleId}>{item.id}</div>
-                                                <div className={style.titleItems}>{item.name}</div>
-                                                <div className={style.titleItems}>{item.price}</div>
-                                                <div className={style.titleItems}>{item.sale?'так':'ні'}</div>
-                                                <div className={style.titleItems}>{item.avaliable?'так':'ні'}</div>
-                                                <div className={style.titleItems}>{item.category}</div>
-                                                <div className={style.titleItems} id={style.date}>{validatorService.setLocaleTime(item.date)}</div>
+                                            <div className={styles.data}>
+                                                <div className={styles.titleItems} id={styles.titleId}>{item.id}</div>
+                                                <div className={styles.titleItems}>{item.name}</div>
+                                                <div className={styles.titleItems}>{item.price}</div>
+                                                <div className={styles.titleItems}>{item.sale?'так':'ні'}</div>
+                                                <div className={styles.titleItems}>{item.avaliable?'так':'ні'}</div>
+                                                <div className={styles.titleItems}>{item.category}</div>
+                                                <div className={styles.titleItems} id={styles.date}>{validatorService.setLocaleTime(item.date)}</div>
                                             </div>
                                         </Link>
                                     </li>

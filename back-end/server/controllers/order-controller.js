@@ -48,11 +48,7 @@ class OrderController {
 
     async showOrderList (req, res) {
         try {
-            const {orderedBy = 'DESC'} = req.query
-            const params = req.query
-            if(params){
-                delete params.orderedBy
-            }
+            const {orderedBy = 'ASC', ...params} = req.query
             const {page} = req.params
             const orderCount = await OrderInfo.findAndCountAll({where:params})
             const {limit, offset, pages} = PaginationServies.getPaginatedData(orderCount, 20, page)
@@ -85,33 +81,29 @@ class OrderController {
         try {
             const {id} = req.params
             const {orderedProducts, choosedBox, orderInfo} = req.body
+            if(!id) throw new Error()
             if(orderInfo) await OrderInfo.update({...orderInfo}, {where:{id}})
             if(orderedProducts){
                 for(let product of orderedProducts) {
-                    if(product?.delete){
+                    product?.delete ?
                         await OrderProduct.destroy({where:{id:product.id}})
-                    }
-                    else{
+                        :
                         await OrderProduct.create({...product, orderInfoId:id})
-                    }
                 }
             }
             if(choosedBox){
                 for(let box of choosedBox) {
-                    if(box?.delete) {
+                    box?.delete ?
                         await  InBox.destroy({where:{id:box.id}})
-                    }
-                    else{
-                        await InBox.create({...box, orderInfoId:id})
-                    }      
+                        :
+                        await InBox.create({...box, orderInfoId:id})  
                 }
             }
             res.json({result:true})
         } catch (e) {
             res.status(500).json({error:'Сталася помилка при редагуванні'})
-        }
-        
-    }
+        } 
+}
 
     async deleteOrder (req, res) {
         try {

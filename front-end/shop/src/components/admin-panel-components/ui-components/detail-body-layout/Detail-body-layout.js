@@ -33,7 +33,7 @@ export default function DetailBody ({ children , error, loading, fetch, reset, d
                         <>
                             <section className={style.buttons}>
                                 <div className={style.container}>
-                                    <AdminEditButton edit={edit} setEdit={setEdit}/>
+                                    {editForm && <AdminEditButton edit={edit} setEdit={setEdit}/>}
                                     <AdminDeleteButton deleteFunction={deleteFunction}/>
                                 </div>
                             </section>

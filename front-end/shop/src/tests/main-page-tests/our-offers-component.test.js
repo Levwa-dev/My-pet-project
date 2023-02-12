@@ -31,6 +31,7 @@ const products = [
     }
 ]
 
+window.scrollTo = jest.fn()
 
 describe('Our offers component', ()=>{
     it('First render', ()=>{

@@ -4,7 +4,7 @@ import * as reduxHooks from "react-redux"
 import MainComponent from "../../components/common-components/main-component/Main-component"
 
 jest.mock('react-redux')
-
+window.scrollTo = jest.fn()
 const mockData = {
     products : [
         {

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../../../sequelize/config/config.json')
+const {Category, Product, ProductPicture} = require('../../../sequelize/models')
 const categoryConroller = require('../../controllers/category-controller')
 const filesService = require('../../services/files-service')
 
@@ -15,28 +16,69 @@ describe('Category controller testing', ()=>{
 
     beforeAll(async () => {
         mockedSequelize = new Sequelize(db.test);
-        await mockedSequelize.sync();
+        await Category.bulkCreate([
+            {
+                id:1,
+                name: 'Морозиво',
+                product: true
+            },
+            {
+                id:2,
+                name: 'Десерт',
+                product: false
+            }
+        ])
+        await Product.bulkCreate([
+            {
+                id:1,
+                name: 'Ice',
+                description: 'DataTypes.TEXT',
+                picture: 'first.jpeg',
+                oldPrice: null,
+                rating: 0,
+                bestOffer: false,
+                price: 12,
+                date: new Date(),
+                sale: false,
+                avaliable: true,
+                categoryId: 1
+            },
+        ])
+        await ProductPicture.bulkCreate([
+            {
+                id:1,
+                picture:'second.jpeg',
+                productId: 1
+            }
+        ])
     })
 
-    afterAll(async () => {
+    afterAll(async() => {
+        await Category.destroy({truncate: {cascade:true}});
         jest.clearAllMocks();
-        await mockedSequelize.close();
     })
 
     describe("Add category function", ()=>{
 
         test('Add not unique category to the database', async ()=>{
             const req = {
-                body:{name:'Морозиво'}
+                body:{
+                    name:'Морозиво',
+                    product:false
+                }
             }
             const res = mockResponse()
+            filesService.mockUploadPhotos('first.jpeg', 'product-photo')
+            filesService.mockUploadPhotos('second.jpeg', 'product-photo', 'product-detail-photo')
             await categoryConroller.addCategory(req, res)
             expect(res.status).toHaveBeenCalledWith(500)
         })
     
         test('Add category to the database', async ()=>{
             const req = {
-                body:{name:'Дисерт'}
+                body:{
+                    name:'asd',
+                }
             }
             const res = mockResponse()
             await categoryConroller.addCategory(req, res)
@@ -77,7 +119,7 @@ describe('Category controller testing', ()=>{
             )
         })
 
-        test("Show list without an error", async()=>{
+        test("Show list with an error", async()=>{
             const req = {}
             const res = mockResponse()
             await categoryConroller.showCategoryList(req, res)
@@ -89,7 +131,7 @@ describe('Category controller testing', ()=>{
         
         test("Wrong category specified", async()=>{
             const req = {
-                params: {id : 6}
+                params: {id : 99}
             }
             const res = mockResponse()
             await categoryConroller.showCategory(req, res)
@@ -120,7 +162,7 @@ describe('Category controller testing', ()=>{
         test("Update category without an error", async ()=>{
             const req = {
                 body:{name:'Заморожений сік'},
-                params: {id:1}
+                params: {id:2}
             }
             const res = mockResponse()
             await categoryConroller.updateCategory(req, res)
@@ -140,14 +182,31 @@ describe('Category controller testing', ()=>{
         })
     })
 
+    describe("Show box category", ()=>{
+        test("Show box category without an error", async () =>{
+            const req = {}
+            const res = mockResponse()
+            await categoryConroller.showBoxCategory(req, res)
+            expect(res.json).toHaveBeenCalledWith(expect.objectContaining({result:expect.anything()}))
+        })
+        
+        test("Cannot find the box category", async () => {
+            let req = {params: {id:2}}
+            const res = mockResponse()
+            await categoryConroller.deleteCategory(req, res)
+            req = {}
+            await categoryConroller.showBoxCategory(req, res)
+            expect(res.status).toHaveBeenCalledWith(500)
+        })
+        
+    })
+
     describe("Delete an category", ()=>{
         test("Delete an category without an error", async ()=>{
             const req = {
                 params: {id:1}
             }
             const res = mockResponse()
-            filesService.mockUploadPhotos('first.jpeg', 'product-photo')
-            filesService.mockUploadPhotos('first.jpeg', 'product-photo', 'product-detail-photo')
             await categoryConroller.deleteCategory(req, res)
             expect(res.json).toHaveBeenCalledWith(
                 expect.objectContaining({result:true})
@@ -156,7 +215,7 @@ describe('Category controller testing', ()=>{
 
         test("An error occurred while deletting category", async ()=>{
             const req = {
-                params: {id:1}
+                params: {id:90}
             }
             const res = mockResponse()
             await categoryConroller.deleteCategory(req, res)

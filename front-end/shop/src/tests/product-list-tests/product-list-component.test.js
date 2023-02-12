@@ -7,7 +7,7 @@ import ProductList from "../../components/common-components/product-list-compone
 
 window.alert = jest.fn()
 jest.mock("axios")
-
+window.scrollTo = jest.fn()
 const mockData = {
     pages:2,
     result:[

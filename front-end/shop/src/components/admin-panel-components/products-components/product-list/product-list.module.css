@@ -6,8 +6,10 @@
     width: 100%;
 }
 .titleItems {
-    display: grid;
-    place-content: center;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 #titleId {
     width: 50px;

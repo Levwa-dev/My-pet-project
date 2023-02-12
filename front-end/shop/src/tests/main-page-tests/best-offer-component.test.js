@@ -8,6 +8,7 @@ const bestOffer = {
     description: 'ice desc',
     picture: 'asdw.png'
 }
+window.scrollTo = jest.fn()
 
 describe("Best offer component", ()=>{
     it("The component renders", ()=>{
