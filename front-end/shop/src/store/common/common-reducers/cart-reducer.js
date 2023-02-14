@@ -8,6 +8,7 @@ export const cartSlice = createSlice({
     name:'cart',
     initialState,
     reducers:{
+        // Додавання продукту до корзини
         orderProduct(state, action){
             const {orderedProduct} = state
             const {copy, boxId} = action.payload
@@ -17,6 +18,7 @@ export const cartSlice = createSlice({
                 orderedProduct.unshift(copy)
             localStorage.setItem('cart', JSON.stringify(orderedProduct))
         },
+        // Збільшення кількості товару в корзині
         increaseQuantityOfProducts (state, action) {
             for(let item of state.orderedProduct) {
                 if(item.id === action.payload.item.id){
@@ -25,6 +27,7 @@ export const cartSlice = createSlice({
             }
             localStorage.setItem('cart', JSON.stringify(state.orderedProduct))
         },
+        // Зменшення кількості товарів в корзині
         decreaseQuantityOfProducts (state, action) {
             const actionItem = action.payload.item
             const {orderedProduct} = state
@@ -36,6 +39,7 @@ export const cartSlice = createSlice({
             }
             localStorage.setItem('cart', JSON.stringify(state.orderedProduct))
         },
+        // Видалення продукту з корзини
         removeProduct (state, action) {
             const {product, boxCategory} = action.payload 
             let productList = state.orderedProduct.filter(item => item.id !== product.id)
@@ -43,7 +47,7 @@ export const cartSlice = createSlice({
             const boxCount = productList.filter(item=> item.categoryId === boxCategory.id).length
             const productCount =  productList.filter(item=> item.categoryId !== boxCategory.id).length
             
-            if(boxCount && !productCount){
+            if(boxCount && !productCount){ // Якщо в корзині не залишились лише пакунки, обнулити корзину
                 productList = []
             }
             state.orderedProduct = productList

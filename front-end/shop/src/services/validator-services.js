@@ -17,7 +17,7 @@ export const validatorService = {
         return date.toLocaleString('uk-uk')
     },
 
-    checkFullfield (template, inputData) {
+    checkFullfield (template, inputData) { // Якщо якісь дані були не заповненні, повернути помилку
         for(let key in template){
             if(!inputData.hasOwnProperty(key)){
                 return false 
@@ -26,7 +26,7 @@ export const validatorService = {
         return true
     },
 
-    checkIfDataChanged (template, data) {
+    checkIfDataChanged (template, data) { // Якщо дані при редагуванні не змінились повертаємо помилку
         let copyTemplate = JSON.stringify(template)
         let copyData = JSON.stringify(data)
         if(copyTemplate === copyData){
@@ -41,7 +41,7 @@ export const validatorService = {
         return objectWithDifferentValues
     },
 
-    validateDeliveringForm(formName) {
+    validateDeliveringForm(formName) { // Валідація форми доставки 
         const inputs = document.forms[formName].getElementsByTagName("input")
         let valid = true
         for(let input of inputs){
@@ -65,7 +65,7 @@ export const validatorService = {
         }
         return valid
     },
-    validateCallBackForm (formName) {
+    validateCallBackForm (formName) { // Валідація форми зворотнього зв'язку
         const inputs = document.forms[formName].getElementsByTagName("input")
         let valid = true
         for(let input of inputs) {

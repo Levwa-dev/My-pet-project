@@ -1,5 +1,6 @@
 import { commonAxios } from "../../utils/axios"
 
+// Шляхи для звернення до кінцевих точок серверу
 export const commonProductService = {
     async showProductOnMain () {
         const response = await commonAxios.get('/product/show-products-on-main')

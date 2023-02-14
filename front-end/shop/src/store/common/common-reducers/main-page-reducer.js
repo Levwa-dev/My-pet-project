@@ -13,6 +13,7 @@ export const mainPageSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers: (builder) =>{
+        // Отримання товарів для головної сторінки
         builder.addCase(getMainPageProducts.fulfilled, (state, action)=>{
             state.products = action.payload.result
             state.bestOffer = action.payload.bestOffer

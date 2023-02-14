@@ -1,4 +1,4 @@
-module.exports = (req, res, next)=>{
+module.exports = (req, res, next)=>{ // Якщо не адміністратор, відорбазити помилку
     try {
         if(!req.user.isAdmin){
             return res.status(401).json({error:'Ви не маєте прав доступу'})

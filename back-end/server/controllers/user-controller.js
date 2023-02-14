@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const PaginationServies = require('../services/pagination-service')
 
 class UserController {
-    async addAdmin(req, res) {
+    async addAdmin(req, res) { // Функція додавання адміністраторів 
         try {
             const {name, email, password} = req.body
             if(!name || !email || !password){
@@ -20,7 +20,7 @@ class UserController {
             res.status(500).json({error: e.message})
         }
     }
-    async getAdmin(req, res) {
+    async getAdmin(req, res) { // Функція відображення адміністратора
         try {
             const {id} = req.params
             if(!id){
@@ -35,7 +35,7 @@ class UserController {
             res.status(500).json({error:"При отриманні даних виникла помилка"})
         }
     }
-    async getAdminList(req, res) {
+    async getAdminList(req, res) { // Функція відображення списку адміністраторів
         try {
             const {page} = req.params
             if(!page) {
@@ -57,7 +57,7 @@ class UserController {
             res.status(500).json({error:"При отриманні даних виникла помилка"})
         }
     }
-    async updateAdmin(req, res) {
+    async updateAdmin(req, res) { // Функція редагування даних адміністратора
         try {
             const {id} = req.params
             const { password, email } = req.body
@@ -67,7 +67,7 @@ class UserController {
             if(password){
                 req.body.password = bcrypt.hashSync(password, 10)
             }
-            if(email){
+            if(email){  // Якщо така пошта вже є в системі, та не належить цьому адміністратору, повертаємо помилку
                 const user = await User.findOne({where:{email}})
                 if(user && user.id !== id){
                     return res.status(500).json({error:"Така пошта вже зайнята"})
@@ -81,10 +81,10 @@ class UserController {
        
         
     }
-    async deleteAdmin (req, res) {
+    async deleteAdmin (req, res) { // Видалення облікового запису адміністратора
         try {
             const {id} = req.params
-            if(!id || id == 1){
+            if(!id || id == 1){ // Повернути помилку, якщо намагаємось видалити головного адміністратора
                 throw new Error()
             }
             await User.destroy({where:{id}})

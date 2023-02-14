@@ -1,6 +1,6 @@
 const TokenService = require('../../services/token-service')
 
-module.exports = async (req, res, next) => {
+module.exports = async (req, res, next) => { // Проміжнє ПЗ для перевірки авторизаціїї користувача
     if (req.method === 'OPTIONS'){
         next()
     }
@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
         }
         const decoded = TokenService.accessTokenVerify(token)
        
-        if(!decoded || !tokenFromDb){
+        if(!decoded || !tokenFromDb){ // Токен не валідний, або відсутній рефреш токен
             return res.status(401).send({error:"Не авторізований"})
         }
         req.user = decoded

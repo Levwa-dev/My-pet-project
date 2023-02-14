@@ -4,7 +4,7 @@ const PaginationServies = require('../services/pagination-service')
 const FilesService = require('../services/files-service')
 
 class CategoryController {
-    async addCategory (req, res) {
+    async addCategory (req, res) { // Функція додавання категорій
         try {
             const {name, product} = req.body
             const category = await Category.findOne({where:{name}})
@@ -18,7 +18,7 @@ class CategoryController {
         }
     }
 
-    async showCategoryList (req, res) {
+    async showCategoryList (req, res) { // Функція показу списку категорій
         try {
             const query = { ...req.query }
             const categoryCount = await Category.findAndCountAll({where:query})
@@ -33,7 +33,7 @@ class CategoryController {
         }
     }
 
-    async showCategory (req, res) {
+    async showCategory (req, res) { // Функція показу категорії
         try {
             const {id} = req.params
             const category =  await Category.findOne({where:{id}})
@@ -46,7 +46,7 @@ class CategoryController {
         }
     }
     
-    async updateCategory (req, res) {
+    async updateCategory (req, res) { // Функція редагування категорії
         try {
             const {id} = req.params
             await Category.update({...req.body}, {where:{id}})
@@ -56,12 +56,12 @@ class CategoryController {
         }
     }
 
-    async deleteCategory (req, res) {
+    async deleteCategory (req, res) { // Функція видалення категорії
         try {
             const {id} = req.params
             const category = await Category.findOne({where:{id}})
             const products = await category.getProducts()
-            for(let product of products) {                  // Видалення всіх дочерніх фото
+            for(let product of products) {                  // Видалення всіх дочерніх фото з тек серверу
                 const productPictures = await product.getProductPictures()
                 for(let photo of productPictures){
                     FilesService.deleteAsyncFile(photo.picture, 'product-photo', 'product-detail-photo')
@@ -75,7 +75,7 @@ class CategoryController {
         }
     }
 
-    async showBoxCategory (req, res) {
+    async showBoxCategory (req, res) { // Відображення категорії, яка містить пакунки для товарів
         try {
             const category = await Category.findOne({where:{product:false}})
             if(!category) {

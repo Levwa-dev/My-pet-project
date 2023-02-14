@@ -3,7 +3,7 @@ const PaginationServies = require('../services/pagination-service')
 
 class OrderController {
     
-    async addOrder(req, res) {
+    async addOrder(req, res) { // Функція додавання замовлення до системи
         let order
         try {
             const {orderedProducts, choosedBox, orderInfo} = req.body
@@ -34,7 +34,7 @@ class OrderController {
         
     }
 
-    async showOrder(req, res){
+    async showOrder(req, res) { // Функція показу замовлення
         try {
             const {id} = req.params
             const order = await OrderInfo.findOne({where:{id}})
@@ -46,7 +46,7 @@ class OrderController {
         }
     }
 
-    async showOrderList (req, res) {
+    async showOrderList (req, res) { // Функція показу списку замовлень
         try {
             const {orderedBy = 'ASC', ...params} = req.query
             const {page} = req.params
@@ -77,13 +77,13 @@ class OrderController {
         }
     }
 
-    async updateOrder (req, res) {
+    async updateOrder (req, res) { // Функція редагування замовлення
         try {
             const {id} = req.params
             const {orderedProducts, choosedBox, orderInfo} = req.body
             if(!id) throw new Error()
             if(orderInfo) await OrderInfo.update({...orderInfo}, {where:{id}})
-            if(orderedProducts){
+            if(orderedProducts){ // Якщо змінюємо замовленні продукти
                 for(let product of orderedProducts) {
                     product?.delete ?
                         await OrderProduct.destroy({where:{id:product.id}})
@@ -91,7 +91,7 @@ class OrderController {
                         await OrderProduct.create({...product, orderInfoId:id})
                 }
             }
-            if(choosedBox){
+            if(choosedBox){ // Якщо змінюємо пакунки до замовленних продуктів
                 for(let box of choosedBox) {
                     box?.delete ?
                         await  InBox.destroy({where:{id:box.id}})
@@ -105,7 +105,7 @@ class OrderController {
         } 
 }
 
-    async deleteOrder (req, res) {
+    async deleteOrder (req, res) { // Функція видалення замовлення
         try {
             const {id} = req.params
             await OrderInfo.destroy({where:{id}})
@@ -116,7 +116,7 @@ class OrderController {
         
     }
     
-    async findProduct (req, res) {
+    async findProduct (req, res) { // Функція пошуку товару для додавання до замволення в адмін. панелі
         try {
             const {name} = req.query
             const product = await Product.findOne({where:{name}})

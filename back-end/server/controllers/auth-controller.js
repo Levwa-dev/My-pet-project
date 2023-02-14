@@ -5,7 +5,7 @@ const TokenService = require('../services/token-service')
 
 class AuthController {
 
-    async registration (req, res) {
+    async registration (req, res) { // Функція для реєстрації головного адмін. акаунту
         try {
             const {email, password} = req.body
             if(!email || !password) {
@@ -26,7 +26,7 @@ class AuthController {
         }
     }
 
-    async login(req, res) {
+    async login(req, res) {  // Функція логіну для адміністраторів
         try {
             const {email, password} = req.body
             if(!email || !password) { 
@@ -50,8 +50,8 @@ class AuthController {
        
     }
 
-    async logout(req, res) {
-        try {
+    async logout(req, res) {    // Функція логауту з адмін. панелі
+        try {  
             const {refreshToken} = req.cookies
             await TokenService.removeTokenFromDb(refreshToken)
             res.clearCookie('refreshToken')
@@ -62,7 +62,7 @@ class AuthController {
        
     }
 
-    async refresh(req, res) {
+    async refresh(req, res) {  // Функція оновлення токену
         try {
             const {refreshToken} = req.cookies
             const tokenFromDb = await TokenService.findTokenfromDb(refreshToken)

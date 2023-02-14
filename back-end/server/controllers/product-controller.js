@@ -8,11 +8,11 @@ const detailImageDir = 'product-detail-photo'
 
 class ProductController {
    
-    async addProduct(req, res) {
+    async addProduct(req, res) { // Функція додавання продуктів
         const file = req.file
         try {
             const params = req.body
-            if(params.bestOffer) { // якщо є вже наявна краща пропозиція, прибираємо її
+            if(params.bestOffer) { // Якщо вже є наявна краща пропозиція, прибираємо її
                 const currentBestOffer = await Product.findOne({where:{bestOffer:true}})
                 if(currentBestOffer) await Product.update({bestOffer:false}, {where:{id:currentBestOffer.id}})
             }
@@ -24,14 +24,14 @@ class ProductController {
         }
     }
 
-    async showProduct(req, res) {
+    async showProduct(req, res) { // Функція показу продукту
         try {
             const {id} = req.params
             const product = await Product.findOne({where:{id}})
             if(!product){
                 return res.status(404).json({error:'Такого товару не знайдено'})
             }
-            if(req.originalUrl === `/shop/product/${id}`) {
+            if(req.originalUrl === `/shop/product/${id}`) { // Якщо потрапили на сторінку з головного сайту, збільшуємо рейтинг
                 const rating = product.rating + 1
                 await Product.update({rating}, {where:{id}})
             }
@@ -45,14 +45,9 @@ class ProductController {
         }
     }
 
-    async showProductListForAdminPanel(req, res) {
+    async showProductListForAdminPanel(req, res) { // Функія показу продуктів для адмін. панелі
         try {
-            const {orderColumn = 'date', orderedBy = 'DESC'} = req.query
-            let query = {...req.query}
-            if(query){
-                if(query.orderColumn) delete query.orderColumn
-                if(query.orderedBy) delete query.orderedBy
-            }
+            const {orderColumn = 'date', orderedBy = 'DESC', ...query} = req.query
             const productCount = await Product.findAndCountAll({where:query})
             const {limit, offset, pages} = PaginationServies.getPaginatedData(productCount, 20, req.params.page)
             const products = await Product.findAll({
@@ -75,7 +70,7 @@ class ProductController {
         
     }
 
-    async getCategories (req, res) {
+    async getCategories (req, res) { // Функція відображення всіх категорій для сторінки редагування продукту
         try {
             const categories = await Category.findAll()
             if(!categories.length){
@@ -87,7 +82,7 @@ class ProductController {
         }
     }
 
-    async showProductList(req, res) {
+    async showProductList(req, res) { // Функція показу списку продуктів для головного сайту
         try {
             const {orderedBy = 'DESC'} = req.query
             const {page, category} = req.params
@@ -113,12 +108,12 @@ class ProductController {
         
     }
 
-    async updateProduct (req, res) {
+    async updateProduct (req, res) { // Функція редаугвання даних продукту
         try {
             const { id } = req.params
             const { file } = req
             let { picturesForDeleting } = req.body
-            if(picturesForDeleting){ // якщо є список фото для видалення
+            if(picturesForDeleting){ // якщо є фото для видалення
                 picturesForDeleting = JSON.parse(picturesForDeleting)
                 for(let picture of picturesForDeleting) {
                     await ProductPicture.destroy({where:{picture}})
@@ -145,7 +140,7 @@ class ProductController {
         }
     }
 
-    async uploadDetailPhotos (req, res) {
+    async uploadDetailPhotos (req, res) { // Функія завантаження додаткових фото товару
         const {id} = req.params
         const {files} = req
         try {
@@ -161,13 +156,13 @@ class ProductController {
         }
     }
 
-    async deleteProduct (req, res) {
+    async deleteProduct (req, res) { // Функція видалення товару
         try {
             const {id} = req.params
             const product = await Product.findOne({where:{id}})
             const productPhotos = await product.getProductPictures()
             await Product.destroy({where:{id}})
-            for(let photo of productPhotos) {
+            for(let photo of productPhotos) { // Видалення додаткових фото з тек серверу
                 FilesService.deleteAsyncFile(photo.picture, imageDir, detailImageDir)
             }
             FilesService.deleteAsyncFile(product.picture, imageDir)
@@ -177,8 +172,8 @@ class ProductController {
         }
     }
     
-    async showProductsOnMain (req, res) {
-        try {
+    async showProductsOnMain (req, res) { // Відображення 3-х головних продуктів кожної з категорій на головній сторінці сайту,
+        try {                             // а також відображення найкращої пропозиції.
             const bestOffer = await Product.findOne({attributes:["id","name","picture","description"], where:{bestOffer:true}})
             const products = []
             const categories = ['Морозиво',"Десерти","Солодощі"]
