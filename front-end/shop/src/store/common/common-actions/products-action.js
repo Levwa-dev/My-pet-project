@@ -4,7 +4,7 @@ import { commonCategoryService } from "../../../services/common-services/categor
 
 const error = "Помилка з'єднання з сервером"
 
-export const getBoxCategory = createAsyncThunk(
+export const getBoxCategory = createAsyncThunk( // Отримання даних категорії пакунків та передача їх до ред'юсеру
     'commonProducts/getBoxCategory',
     async(_, {rejectValue}) => {
         try {
@@ -19,7 +19,7 @@ export const getBoxCategory = createAsyncThunk(
     }
 )
 
-export const getProduct = createAsyncThunk(
+export const getProduct = createAsyncThunk( // Отримання даних товару та передача їх до ред'юсеру
     'commonProducts/getProduct',
     async(data, {rejectWithValue}) => {
         try {
@@ -35,7 +35,7 @@ export const getProduct = createAsyncThunk(
     }
 )
 
-export const getProductList = createAsyncThunk(
+export const getProductList = createAsyncThunk( // Отримання даних списку товарів та передача їх до ред'юсеру
     'commonProducts/getProductList',
     async(data, {rejectWithValue}) => {
         try {

@@ -1,9 +1,9 @@
 import { commonAxios } from "../../utils/axios"
 
 export const cartService = {
+
     async makeOrder (order) {
         const response = await commonAxios.post('/order/make-order', order)
-        console.log(response)
         return response
     },
     getTotalPrice (array) {
@@ -20,7 +20,7 @@ export const cartService = {
         }
         return true
     },
-    getDateForInput () {
+    getDateForInput () { // Повертаємо дату в форматі інпуту
         const newDate = new Date ()
         const year = newDate.getFullYear()
         const month = newDate.getMonth()+1 < 10 ? '0'+ (newDate.getMonth()+1) : newDate.getMonth()+1

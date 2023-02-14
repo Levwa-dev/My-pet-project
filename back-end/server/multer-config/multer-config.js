@@ -4,7 +4,7 @@ const path = require('path')
 const storage = (mainPath, childrenPath) => {
   return multer.diskStorage({
     destination: function (req, file, cb) {
-      !childrenPath ? 
+      !childrenPath ? // Вказуємо різний шлях для завантаження фотографій
         cb(null, path.resolve(__dirname, '..', 'public', mainPath))
         :
         cb(null, path.resolve(__dirname, '..', 'public', mainPath, childrenPath))
@@ -17,6 +17,6 @@ const storage = (mainPath, childrenPath) => {
 }
 
 module.exports = {
-    productUpload : multer({ storage: storage('product-photo') }),
-    productDetailUpload : multer({ storage: storage('product-photo', 'product-detail-photo') })
+    productUpload : multer({ storage: storage('product-photo') }), // Multer для завантаження головного фото товару
+    productDetailUpload : multer({ storage: storage('product-photo', 'product-detail-photo') }) // Multer для завантаження додаткових фото товару
 }

@@ -1,19 +1,23 @@
-import axios from 'axios'
+import { authAxois } from "../utils/axios"
 
-const backHost = process.env.REACT_APP_BACK_END_HOST
-
+// Шляхи для звернення до кінцевих точок серверу
 export const authService = {
 
     async login (data) {
-        const response = await axios.post(backHost + '/auth/login', data, {withCredentials: true})
+        const response = await authAxois.post('/login', data, {withCredentials: true})
         return response.data 
     },
     async logout () {
-        const response = await axios.post(backHost + '/auth/logout', {}, {withCredentials: true})
+        const response = await authAxois.post('/logout', {}, {withCredentials: true})
         return response.data
     },
     async refresh () {
-        const response = await axios.get(backHost + '/auth/refresh', { withCredentials: true })
+        const response = await authAxois.get('/refresh', { withCredentials: true })
+        return response.data
+    },
+    async adminRegistration (data) {
+        console.log(data)
+        const response = await authAxois.post('/registration', data, { withCredentials: true })
         return response.data
     }
 }

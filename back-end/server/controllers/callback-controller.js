@@ -3,7 +3,7 @@ const {CallBack} = require('../../sequelize/models')
 const PaginationServies = require('../services/pagination-service')
 
 class CallbackController {
-    async addCallBack(req, res) {
+    async addCallBack(req, res) {  // Функція додавання запиту зворотнього відгуку
         try {
             const {firstName, lastName, number, call} = req.body
             if(!firstName || !lastName || !number || !call){
@@ -16,7 +16,7 @@ class CallbackController {
         }
     }
 
-    async showCallBack(req, res) {
+    async showCallBack(req, res) { // Функція відображення запиту
         try {
             const {id} = req.params
             if(!id){
@@ -32,7 +32,7 @@ class CallbackController {
         }
     }
 
-    async showCallBackList(req, res) {
+    async showCallBackList(req, res) { // Функція Відображення всіх запитів
         try {
             const {page} = req.params
             const query = { ...req.query }
@@ -57,7 +57,7 @@ class CallbackController {
         }
     }
 
-    async deleteCallBack (req, res) {
+    async deleteCallBack (req, res) { // Функція видалення запиту з системи
         try {
             const {id} = req.params
             if(!id){

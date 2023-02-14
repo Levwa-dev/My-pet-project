@@ -12,7 +12,7 @@ export default function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                { isAdmin && adminRoutes.map(({path, component})=>{
+                { isAdmin && adminRoutes.map(({path, component})=>{ // Якщо авторизований користувач адміністротор, відображаємо адмін. панель
                     return <Route key={path} path={path} element={component}/>
                 })
                 }
