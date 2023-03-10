@@ -12,7 +12,7 @@ class TokenService {
 
     refreshTokenVerify(token) { // Перевірка ркфреш токену
         try {
-            return jwt.verify(token, process.env.JWT_REFRESH_KEY)
+            return jwt.verify(token, process.env.JWT_REFRESH_KEY || 'SomeRefreshStringForJwt')
         } catch (e) {
             return null
         }
@@ -20,7 +20,7 @@ class TokenService {
     
     accessTokenVerify(token) { // Перевірка аксес токену
         try {
-            return jwt.verify(token, process.env.JWT_ACCESS_KEY)
+            return jwt.verify(token, process.env.JWT_ACCESS_KEY || 'SomeRefreshStringForJwt')
         } catch (error) {
             return null 
         }
