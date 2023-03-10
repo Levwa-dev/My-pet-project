@@ -5,8 +5,8 @@ require('dotenv').config()
 class TokenService {
 
     generateJWT (data) { // Генеруємо JWT TOKEN
-        const access = jwt.sign(data, process.env.JWT_ACCESS_KEY, {expiresIn:'30m'})
-        const refresh = jwt.sign(data, process.env.JWT_REFRESH_KEY, {expiresIn:'30d'})
+        const access = jwt.sign(data, process.env.JWT_ACCESS_KEY || 'SOMEstringforKeyGeneration', {expiresIn:'30m'})
+        const refresh = jwt.sign(data, process.env.JWT_REFRESH_KEY || 'SomeRefreshStringForJwt', {expiresIn:'30d'})
         return {access, refresh}
     }
 
